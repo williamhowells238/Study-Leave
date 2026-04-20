@@ -1,0 +1,17 @@
+{
+  "orgName": "EPA Study Leave Scratch Org",
+  "edition": "Developer",
+  "description": "Scratch org for EPA Study Leave development",
+  "hasSampleData": false,
+  "features": [
+    "EnableSetPasswordInApi"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    },
+    "mobileSettings": {
+      "enableS1EncryptedStoragePref2": false
+    }
+  }
+}
