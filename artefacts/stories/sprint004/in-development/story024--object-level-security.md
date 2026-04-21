@@ -162,3 +162,10 @@ Result: Rejected
 
 ### Changes to be made
 1. **Restore story013 file** — The file `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md` was accidentally deleted in commit `f7d99c1`. Restore this file to its original state on the `feature/024` branch, commit, and push. The PR must only contain changes related to story 024.
+
+## Fix Record
+
+Agent: Developer Agent
+Branch: feature/024
+PR: https://github.com/williamhowells238/Study-Leave/pull/13
+Summary: Restored the accidentally deleted file `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md` by checking it out from the Dev1 branch. The file was deleted in commit f7d99c1 alongside story-024 changes. No functional changes to the story-024 implementation were needed — the CRUD matrix configuration was confirmed correct by the Architect review.
