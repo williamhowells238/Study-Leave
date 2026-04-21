@@ -142,3 +142,23 @@ Agent: Developer Agent
 Branch: feature/024
 PR: https://github.com/williamhowells238/Study-Leave/pull/13
 Summary: Audited existing Profile and Permission Set XML files against the acceptance criteria CRUD matrix. Identified four gaps: EPA_PublicHoliday__c Read access missing from Apprentice Profile, Line Manager Profile, Apprentice PermSet, and Manager PermSet; EPA_StudyLeaveAllowance__mdt Read access missing from Apprentice and Manager PermSets. Added the required objectPermissions blocks to all four files. Admin Profile and Admin PermSet were verified as already complete — no changes needed. Deployed successfully to sprint003 scratch org (Deploy ID: 0AfC300000BtrADKAZ, 7/7 components). All 21 Apex tests passed with 100% pass rate. No code quality scan required as changes are purely declarative XML metadata.
+
+## PR Review - story-024: configure object-level security on profiles and permission sets
+
+Result: Rejected
+
+### Summary
+- **Acceptance Criteria (CRUD Matrix)**: All four acceptance criteria are fully satisfied by the implementation. The CRUD matrix was verified against every Profile and Permission Set XML file:
+  - **Apprentice** — Profile: Create/Read/Edit on `EPA_StudyLeaveRequest__c`, Read on `EPA_LeaveCategory__c`, Read on `EPA_PublicHoliday__c` (new). PermSet adds Read on `EPA_PublicHoliday__c` and `EPA_StudyLeaveAllowance__mdt` (new). Correct.
+  - **Line Manager** — Profile: Read on `EPA_StudyLeaveRequest__c`, Read on `EPA_LeaveCategory__c`, Read on `EPA_PublicHoliday__c` (new). PermSet adds Read on `EPA_PublicHoliday__c` and `EPA_StudyLeaveAllowance__mdt` (new). Correct.
+  - **System Administrator** — Profile: Full CRUD + ViewAll/ModifyAll on all three custom objects. PermSet: Full CRUD + ViewAll/ModifyAll on all four objects including `EPA_StudyLeaveAllowance__mdt`. No changes needed — verified as already complete. Correct.
+- **CMDT Handling**: The decision to configure `EPA_StudyLeaveAllowance__mdt` permissions on Permission Sets only (not Profiles) is architecturally sound and well-documented in the solution plan risks section.
+- **Naming Conventions**: All components follow the `EPA_CamelCaseName_Suffix` naming standard. Correct.
+- **Git Conventions**: Branch `feature/024` targets `Dev1` with correct PR title format `story-024: ...`. Commit messages follow `story-[XXX]: short description`. Correct.
+- **Solution Plan Alignment**: Implementation matches the solution plan exactly — four files modified, two verified with no changes needed.
+- **Code Quality**: No code analysis required — changes are purely declarative XML metadata (objectPermissions blocks). Confirmed no Apex, LWC, or Flow changes in the PR.
+- **Test Results**: All 21 Apex tests pass with 100% pass rate.
+- **Blocking Issue**: The PR includes the accidental deletion of `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md`. This file was added to Dev1 in commit `e875b1a` and then deleted in the story-024 commit `f7d99c1`. Merging this PR would remove the story013 file from the repository. This is unrelated to story 024 and must be corrected before the PR can be approved.
+
+### Changes to be made
+1. **Restore story013 file** — The file `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md` was accidentally deleted in commit `f7d99c1`. Restore this file to its original state on the `feature/024` branch, commit, and push. The PR must only contain changes related to story 024.
