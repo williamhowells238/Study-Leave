@@ -134,3 +134,40 @@ Result: Approved
 
 ### Changes to be made
 - None. All quality checks pass. PR merged into Dev1.
+
+## Test Results
+
+Result: Passed
+Tested By: QA Agent
+
+### Acceptance Criteria Results
+- AC1: Given an apprentice has selected a Start Date and End Date, when the request is saved, then the system automatically calculates business days and stores the value in EPA_CalculatedBusinessDays__c - **Pass**
+  - Verification method: Created EPA_StudyLeaveRequest__c records via SF CLI with various date ranges and verified EPA_CalculatedBusinessDays__c was auto-populated on insert. Also verified recalculation on date update.
+  - Evidence: Record a00Ff00000GWreHIAT created with Mon 27 Apr – Fri 1 May → EPA_CalculatedBusinessDays__c = 5. Updated end date to Wed 29 Apr → recalculated to 3. Field is automatically populated by before trigger on both insert and update.
+
+- AC2: Given the date range includes weekends (Saturday and Sunday), when the business day calculation runs, then weekend days are excluded from the count - **Pass**
+  - Verification method: Created a record spanning two weekends (Mon 27 Apr – Fri 8 May 2026) and verified only weekdays were counted.
+  - Evidence: Record a00Ff00000GWkQ2IAL: 12 calendar days, EPA_CalculatedBusinessDays__c = 10 (4 weekend days excluded).
+
+- AC3: Given the date range includes dates that match Public Holiday records, when the business day calculation runs, then those public holiday dates are excluded from the count - **Pass**
+  - Verification method: Created a Public Holiday record for Wed 6 May 2026, then created a study leave request for Mon 4 May – Fri 8 May 2026 and verified the holiday was excluded.
+  - Evidence: Record a00Ff00000GWro9IAD: 5 weekdays minus 1 public holiday = EPA_CalculatedBusinessDays__c = 4.
+
+- AC4: Given a date range of Monday to Friday with no public holidays in between, when the calculation runs, then the result is 5 business days - **Pass**
+  - Verification method: Created a record with EPA_StartDate__c = Mon 27 Apr 2026, EPA_EndDate__c = Fri 1 May 2026 (no public holidays in this range).
+  - Evidence: Record a00Ff00000GWreHIAT: EPA_CalculatedBusinessDays__c = 5.
+
+- AC5: Given a date range that spans two weeks (Monday to the following Friday) with one public holiday on a Wednesday, when the calculation runs, then the result is 9 business days - **Pass**
+  - Verification method: Created Public Holiday on Wed 6 May 2026, then created a record from Mon 27 Apr to Fri 8 May 2026 (10 weekdays minus 1 holiday).
+  - Evidence: Record a00Ff00000GWrhVIAT: EPA_CalculatedBusinessDays__c = 9.
+
+- AC6: Given the Start Date and End Date are the same date (a weekday, not a public holiday), when the calculation runs, then the result is 1 business day - **Pass**
+  - Verification method: Created a record with both dates set to Tue 28 Apr 2026 (weekday, no holiday).
+  - Evidence: Record a00Ff00000GWnE9IAL: EPA_CalculatedBusinessDays__c = 1.
+
+### Additional Verification
+- **Apex Unit Tests**: Ran EPA_BusinessDayCalculation_TestClass — 11/11 tests passed (100% pass rate). Covers positive, negative, bulk, and update recalculation scenarios.
+- **Date Update Recalculation**: Confirmed trigger fires on update of EPA_StartDate__c / EPA_EndDate__c and recalculates correctly.
+
+### Summary
+All tests passed. All 6 acceptance criteria verified in the scratch org (sprint001) with live data operations and confirmed by 11/11 Apex unit tests passing. The story is now complete.
