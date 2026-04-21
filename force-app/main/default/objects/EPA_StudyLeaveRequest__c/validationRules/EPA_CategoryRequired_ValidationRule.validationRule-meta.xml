@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_CategoryRequired_ValidationRule</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(EPA_Category__c)</errorConditionFormula>
+    <errorDisplayField>EPA_Category__c</errorDisplayField>
+    <errorMessage>Category is required. Please select a leave category for this Study Leave Request.</errorMessage>
+</ValidationRule>
