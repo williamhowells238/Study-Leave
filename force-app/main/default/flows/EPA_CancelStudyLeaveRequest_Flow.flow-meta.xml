@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <decisions>
+        <name>Is_Cancellable</name>
+        <label>Is Cancellable</label>
+        <locationX>176</locationX>
+        <locationY>276</locationY>
+        <defaultConnector>
+            <targetReference>Error_Wrong_Status</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Cancellable - Wrong Status</defaultConnectorLabel>
+        <rules>
+            <name>Start_Date_Passed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Study_Leave_Request.EPA_StartDate__c</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Error_Start_Date_Passed</targetReference>
+            </connector>
+            <label>Start Date Passed</label>
+        </rules>
+        <rules>
+            <name>Can_Cancel</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Study_Leave_Request.EPA_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confirmation_Screen</targetReference>
+            </connector>
+            <label>Can Cancel - Pending</label>
+        </rules>
+        <rules>
+            <name>Can_Cancel_Approved</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Study_Leave_Request.EPA_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Approved</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Confirmation_Screen</targetReference>
+            </connector>
+            <label>Can Cancel - Approved</label>
+        </rules>
+    </decisions>
+    <interviewLabel>Cancel Study Leave Request {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>EPA Cancel Study Leave Request Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Study_Leave_Request</name>
+        <label>Get Study Leave Request</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Cancellable</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>EPA_StudyLeaveRequest__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Update_Status_To_Cancelled</name>
+        <label>Update Status To Cancelled</label>
+        <locationX>300</locationX>
+        <locationY>534</locationY>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Error_Update_Failed</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>EPA_Status__c</field>
+            <value>
+                <stringValue>Cancelled</stringValue>
+            </value>
+        </inputAssignments>
+        <object>EPA_StudyLeaveRequest__c</object>
+    </recordUpdates>
+    <screens>
+        <name>Confirmation_Screen</name>
+        <label>Confirm Cancellation</label>
+        <locationX>300</locationX>
+        <locationY>400</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Update_Status_To_Cancelled</targetReference>
+        </connector>
+        <fields>
+            <name>Confirmation_Message</name>
+            <fieldText>&lt;p&gt;You are about to cancel the following study leave request:&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Request:&lt;/strong&gt; {!Get_Study_Leave_Request.Name}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status:&lt;/strong&gt; {!Get_Study_Leave_Request.EPA_Status__c}&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Start Date:&lt;/strong&gt; {!Get_Study_Leave_Request.EPA_StartDate__c}&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Click &lt;strong&gt;Next&lt;/strong&gt; to confirm the cancellation.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Start_Date_Passed</name>
+        <label>Cannot Cancel Request</label>
+        <locationX>50</locationX>
+        <locationY>400</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Start_Date_Message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;This request can no longer be cancelled as the leave start date has passed.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Update_Failed</name>
+        <label>Cancellation Failed</label>
+        <locationX>600</locationX>
+        <locationY>668</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Update_Message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;An error occurred while cancelling the request. Please try again or contact your administrator.&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;{!$Flow.FaultMessage}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Error_Wrong_Status</name>
+        <label>Cannot Cancel Request</label>
+        <locationX>500</locationX>
+        <locationY>400</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Error_Wrong_Status_Message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Only Pending or Approved requests can be cancelled.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Success_Screen</name>
+        <label>Request Cancelled</label>
+        <locationX>300</locationX>
+        <locationY>668</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success_Message</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Your study leave request has been successfully cancelled.&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Study_Leave_Request</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
