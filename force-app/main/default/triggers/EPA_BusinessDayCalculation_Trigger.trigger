@@ -1,6 +1,7 @@
 /**
  * @description: Before trigger on EPA_StudyLeaveRequest__c to calculate business days
- *               between Start Date and End Date, excluding weekends and public holidays.
+ *               between Start Date and End Date, excluding weekends and public holidays,
+ *               and validate against the annual study leave allowance.
  * @author: Developer Agent
  * @date: 2026-04-21
  */
@@ -22,5 +23,6 @@ trigger EPA_BusinessDayCalculation_Trigger on EPA_StudyLeaveRequest__c (before i
 
     if (!recordsToProcess.isEmpty()) {
         EPA_BusinessDayCalculation_Class.calculateBusinessDays(recordsToProcess);
+        EPA_AnnualAllowanceValidation_Class.validateAllowance(recordsToProcess);
     }
 }
