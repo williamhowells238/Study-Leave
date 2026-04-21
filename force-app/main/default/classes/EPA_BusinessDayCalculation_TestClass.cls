@@ -18,15 +18,15 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_LeaveCategory__c category = new EPA_LeaveCategory__c(Name = 'Exam Prep');
         insert category;
 
-        // Create public holidays for a known week: Wednesday 2026-01-07
-        // 2026-01-05 is a Monday, 2026-01-09 is a Friday
-        // 2026-01-07 (Wednesday) is a public holiday
+        // Create public holidays for a known week: Wednesday 2027-01-06
+        // 2027-01-04 is a Monday, 2027-01-08 is a Friday
+        // 2027-01-06 (Wednesday) is a public holiday
         List<EPA_PublicHoliday__c> holidays = new List<EPA_PublicHoliday__c>();
-        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2026, 1, 7)));
-        // Public holiday on a Saturday (2026-01-10) — should not double-subtract
-        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2026, 1, 10)));
-        // Public holiday for two-week range test: Wednesday 2026-01-14
-        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2026, 1, 14)));
+        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2027, 1, 6)));
+        // Public holiday on a Saturday (2027-01-09) — should not double-subtract
+        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2027, 1, 9)));
+        // Public holiday for two-week range test: Wednesday 2027-01-13
+        holidays.add(new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2027, 1, 13)));
         insert holidays;
     }
 
@@ -44,7 +44,7 @@ private class EPA_BusinessDayCalculation_TestClass {
 
     /**
      * @description: Monday to Friday with no public holidays = 5 business days.
-     *               2026-01-19 (Mon) to 2026-01-23 (Fri) — no holidays in this range.
+     *               2027-01-18 (Mon) to 2027-01-22 (Fri) — no holidays in this range.
      */
     @isTest
     static void givenMonToFriNoHolidays_whenInserted_thenFiveBusinessDays() {
@@ -52,8 +52,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 19), // Monday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 23)     // Friday
+            EPA_StartDate__c = Date.newInstance(2027, 1, 18), // Monday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 22)     // Friday
         );
 
         Test.startTest();
@@ -82,13 +82,13 @@ private class EPA_BusinessDayCalculation_TestClass {
      */
     @isTest
     static void givenTwoWeekRangeWithOneHoliday_whenInserted_thenCorrectBusinessDays() {
-        // 2026-01-05 (Mon) to 2026-01-09 (Fri) = 5 weekdays minus 1 holiday (Jan 7) = 4 business days
+        // 2027-01-04 (Mon) to 2027-01-08 (Fri) = 5 weekdays minus 1 holiday (Jan 6) = 4 business days
         EPA_LeaveCategory__c cat = getTestCategory();
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 5),  // Monday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 9)      // Friday
+            EPA_StartDate__c = Date.newInstance(2027, 1, 4),  // Monday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 8)      // Friday
         );
 
         Test.startTest();
@@ -109,15 +109,15 @@ private class EPA_BusinessDayCalculation_TestClass {
      */
     @isTest
     static void givenTwoWeekRangeWithOneHoliday_whenInserted_thenNineBusinessDays() {
-        // Add a holiday on Wed 2026-01-21
-        insert new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2026, 1, 21));
+        // Add a holiday on Wed 2027-01-20
+        insert new EPA_PublicHoliday__c(EPA_HolidayDate__c = Date.newInstance(2027, 1, 20));
 
         EPA_LeaveCategory__c cat = getTestCategory();
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 19), // Monday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 30)     // Friday
+            EPA_StartDate__c = Date.newInstance(2027, 1, 18), // Monday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 29)     // Friday
         );
 
         Test.startTest();
@@ -140,8 +140,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 19), // Monday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 19)     // Same Monday
+            EPA_StartDate__c = Date.newInstance(2027, 1, 18), // Monday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 18)     // Same Monday
         );
 
         Test.startTest();
@@ -169,8 +169,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 10), // Saturday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 10)
+            EPA_StartDate__c = Date.newInstance(2027, 1, 9), // Saturday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 9)
         );
 
         Test.startTest();
@@ -194,8 +194,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 11), // Sunday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 11)
+            EPA_StartDate__c = Date.newInstance(2027, 1, 10), // Sunday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 10)
         );
 
         Test.startTest();
@@ -223,8 +223,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 8),  // Thursday
-            EPA_EndDate__c = Date.newInstance(2026, 1, 12)     // Monday
+            EPA_StartDate__c = Date.newInstance(2027, 1, 7),  // Thursday
+            EPA_EndDate__c = Date.newInstance(2027, 1, 11)     // Monday
         );
 
         Test.startTest();
@@ -249,7 +249,7 @@ private class EPA_BusinessDayCalculation_TestClass {
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
             EPA_StartDate__c = null,
-            EPA_EndDate__c = Date.newInstance(2026, 1, 9)
+            EPA_EndDate__c = Date.newInstance(2027, 1, 8)
         );
 
         Test.startTest();
@@ -277,7 +277,7 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 5),
+            EPA_StartDate__c = Date.newInstance(2027, 1, 4),
             EPA_EndDate__c = null
         );
 
@@ -306,14 +306,14 @@ private class EPA_BusinessDayCalculation_TestClass {
     @isTest
     static void givenBulkInsert_whenTwoHundredRecords_thenAllCalculatedCorrectly() {
         List<EPA_StudyLeaveRequest__c> requests = new List<EPA_StudyLeaveRequest__c>();
-        // All records: Mon 2026-01-19 to Fri 2026-01-23 = 5 business days (no holidays)
+        // All records: Mon 2027-01-18 to Fri 2027-01-22 = 5 business days (no holidays)
         EPA_LeaveCategory__c cat = getTestCategory();
         for (Integer i = 0; i < 200; i++) {
             requests.add(new EPA_StudyLeaveRequest__c(
                 EPA_Apprentice__c = testUserId,
                 EPA_Category__c = cat.Id,
-                EPA_StartDate__c = Date.newInstance(2026, 1, 19),
-                EPA_EndDate__c = Date.newInstance(2026, 1, 23)
+                EPA_StartDate__c = Date.newInstance(2027, 1, 18),
+                EPA_EndDate__c = Date.newInstance(2027, 1, 22)
             ));
         }
 
@@ -345,8 +345,8 @@ private class EPA_BusinessDayCalculation_TestClass {
         EPA_StudyLeaveRequest__c req = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = cat.Id,
-            EPA_StartDate__c = Date.newInstance(2026, 1, 19), // Mon-Fri = 5
-            EPA_EndDate__c = Date.newInstance(2026, 1, 23)
+            EPA_StartDate__c = Date.newInstance(2027, 1, 18), // Mon-Fri = 5
+            EPA_EndDate__c = Date.newInstance(2027, 1, 22)
         );
         insert req;
 
@@ -357,8 +357,8 @@ private class EPA_BusinessDayCalculation_TestClass {
             'Initial calculation should be 5');
 
         // Update to a single day
-        req.EPA_StartDate__c = Date.newInstance(2026, 1, 19);
-        req.EPA_EndDate__c = Date.newInstance(2026, 1, 19);
+        req.EPA_StartDate__c = Date.newInstance(2027, 1, 18);
+        req.EPA_EndDate__c = Date.newInstance(2027, 1, 18);
 
         Test.startTest();
         update req;

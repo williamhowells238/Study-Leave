@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_AdvanceNotice_ValidationRule</fullName>
+    <active>true</active>
+    <errorConditionFormula>EPA_StartDate__c &lt; ADDMONTHS(TODAY(), 1)</errorConditionFormula>
+    <errorDisplayField>EPA_StartDate__c</errorDisplayField>
+    <errorMessage>Study leave requests must be submitted at least one month before the start date.</errorMessage>
+</ValidationRule>
