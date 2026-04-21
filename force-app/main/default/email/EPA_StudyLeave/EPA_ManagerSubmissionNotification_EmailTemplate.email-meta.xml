@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notifies the line manager when an apprentice submits a study leave request</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>EPA Manager Submission Notification</name>
+    <style>none</style>
+    <subject>Study Leave Request Submitted — {!EPA_StudyLeaveRequest__c.Name}</subject>
+    <type>text</type>
+</EmailTemplate>

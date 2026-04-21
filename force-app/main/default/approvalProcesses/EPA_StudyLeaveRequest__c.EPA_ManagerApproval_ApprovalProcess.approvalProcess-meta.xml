@@ -29,6 +29,7 @@
         </rejectBehavior>
     </approvalStep>
     <description>Single-level manager approval for study leave requests. Routes to the submitter manager. No escalation or timeout.</description>
+    <emailTemplate>EPA_StudyLeave/EPA_ManagerSubmissionNotification_EmailTemplate</emailTemplate>
     <enableMobileDeviceAccess>true</enableMobileDeviceAccess>
     <nextAutomatedApprover>
         <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
