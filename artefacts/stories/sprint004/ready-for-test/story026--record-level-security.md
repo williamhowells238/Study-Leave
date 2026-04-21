@@ -119,3 +119,20 @@ Agent: Developer Agent
 Branch: feature/026
 PR: https://github.com/williamhowells238/Study-Leave/pull/14
 Summary: Updated OWD sharing models for three custom objects — EPA_StudyLeaveRequest__c changed from ReadWrite to Private, EPA_LeaveCategory__c and EPA_PublicHoliday__c changed from ReadWrite to Read (Public Read Only). No changes needed for EPA_StudyLeaveAllowance__mdt (CMDT always readable) or EPA_StudyLeaveAdministrator_PermissionSet (already has viewAllRecords/modifyAllRecords). Deployed successfully to scratch org sprint003. All 21 Apex tests passed (100% pass rate). OWD settings verified via SOQL query against EntityDefinition.
+
+## PR Review - story-026: configure record-level security OWD settings
+
+Result: Approved
+
+### Summary
+- The PR correctly implements all three OWD sharing model changes as specified in the solution plan: EPA_StudyLeaveRequest__c changed from ReadWrite to Private, EPA_LeaveCategory__c and EPA_PublicHoliday__c changed from ReadWrite to Read (Public Read Only).
+- The changes are minimal, clean, and scoped exclusively to the three object-meta.xml files — no unnecessary modifications.
+- EPA_StudyLeaveAllowance__mdt (Custom Metadata Type) correctly has no changes as CMDTs do not support OWD configuration and are always publicly readable.
+- EPA_StudyLeaveAdministrator_PermissionSet correctly has no changes as it already grants viewAllRecords/modifyAllRecords, overriding the Private OWD for administrators.
+- Branch naming (feature/026), PR title (story-026: ...), and target branch (Dev1) all conform to project conventions.
+- All 21 Apex tests pass with a 100% pass rate, confirming no regressions from the OWD changes.
+- Grant Access Using Hierarchies is enabled by default for custom objects, ensuring managers in the Role Hierarchy automatically gain read access to subordinate records — no additional sharing rules are required.
+- Cross-epic impact (approval workflow, notifications, dashboards) should be validated during QA testing.
+
+### Changes to be made
+- None. PR approved as-is.
