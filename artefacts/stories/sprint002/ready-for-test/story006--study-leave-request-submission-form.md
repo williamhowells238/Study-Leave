@@ -98,3 +98,20 @@ Agent: Developer Agent
 Branch: feature/story006
 PR: https://github.com/williamhowells238/Study-Leave/pull/8
 Summary: Implemented the study leave request submission form using four declarative components: a Before-save Record-Triggered Flow (EPA_StudyLeaveSubmission_Flow) to auto-set Apprentice and Status on creation, a Validation Rule (EPA_CategoryRequired_ValidationRule) to enforce Category as required, a Page Layout with Request Details and Record Information sections, and a Lightning Record Page (EPA_StudyLeaveRequest_FlexiPage) for the confirmation view. Updated EPA_BusinessDayCalculation_TestClass to include a test Leave Category in TestSetup and populate EPA_Category__c on all test records. Initial deployment required a fix to the FlexiPage (removed invalid relatedListComponentOverride property). All 12 Apex tests pass at 100% on scratch org sprint002.
+
+## PR Review - story-006: study leave request submission form
+
+Result: Approved
+
+### Summary
+- All four declarative components match the solution plan and satisfy the acceptance criteria.
+- **EPA_StudyLeaveSubmission_Flow**: Correctly configured as a Before-Save Record-Triggered Flow on `EPA_StudyLeaveRequest__c` (Create only). Assigns `$Record.EPA_Apprentice__c = $User.Id` and `$Record.EPA_Status__c = "Pending"`. Status is Active. No DML — correct for before-save. Satisfies AC3.
+- **EPA_CategoryRequired_ValidationRule**: Condition `ISBLANK(EPA_Category__c)` with error displayed on the `EPA_Category__c` field. Active. Clear user-facing error message. Satisfies AC4.
+- **Page Layout (EPA_StudyLeaveRequest__c-Study Leave Request Layout)**: Request Details section with `EPA_StartDate__c`, `EPA_EndDate__c`, `EPA_Category__c` all marked Required. Record Information section with `Name`, `EPA_Status__c`, `EPA_Apprentice__c`, `EPA_CalculatedBusinessDays__c` all Readonly. System Information section included. Satisfies AC1, AC2, AC5.
+- **EPA_StudyLeaveRequest_FlexiPage**: RecordPage for `EPA_StudyLeaveRequest__c` with Highlights Panel and Detail Panel in a tabbed layout. Uses `flexipage:recordHomeTemplateDesktop`. Satisfies AC5 confirmation view.
+- **EPA_BusinessDayCalculation_TestClass**: Test setup updated to create a leave category record. All 10 test methods updated to populate `EPA_Category__c` via a helper method. Clean, consistent changes. All 12 tests passing.
+- Naming conventions comply with project standards (`EPA_` prefix, correct suffixes: `_Flow`, `_ValidationRule`, `_FlexiPage`).
+- No code quality issues identified. All changes are declarative metadata and test class updates.
+
+### Changes to be made
+- None. All components are correctly implemented.
