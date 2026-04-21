@@ -47,12 +47,20 @@
             <name>EPA_StatusApproved_FieldUpdate</name>
             <type>FieldUpdate</type>
         </action>
+        <action>
+            <name>EPA_ApprenticeApprovalNotification_EmailAlert</name>
+            <type>Alert</type>
+        </action>
     </finalApprovalActions>
     <finalApprovalRecordLock>true</finalApprovalRecordLock>
     <finalRejectionActions>
         <action>
             <name>EPA_StatusRejected_FieldUpdate</name>
             <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>EPA_ApprenticeRejectionNotification_EmailAlert</name>
+            <type>Alert</type>
         </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>

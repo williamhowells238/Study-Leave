@@ -1,0 +1,9 @@
+Your study leave request has been approved.
+
+Request Details:
+- Start Date: {!EPA_StudyLeaveRequest__c.EPA_StartDate__c}
+- End Date: {!EPA_StudyLeaveRequest__c.EPA_EndDate__c}
+- Leave Category: {!EPA_StudyLeaveRequest__c.EPA_Category__c}
+- Calculated Business Days: {!EPA_StudyLeaveRequest__c.EPA_CalculatedBusinessDays__c}
+
+View the request: {!EPA_StudyLeaveRequest__c.Link}
