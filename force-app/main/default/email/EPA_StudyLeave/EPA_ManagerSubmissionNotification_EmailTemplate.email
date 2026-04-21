@@ -1,0 +1,12 @@
+A new study leave request has been submitted and requires your review.
+
+Request Details:
+- Apprentice: {!EPA_StudyLeaveRequest__c.EPA_Apprentice__c}
+- Start Date: {!EPA_StudyLeaveRequest__c.EPA_StartDate__c}
+- End Date: {!EPA_StudyLeaveRequest__c.EPA_EndDate__c}
+- Leave Category: {!EPA_StudyLeaveRequest__c.EPA_Category__c}
+- Calculated Business Days: {!EPA_StudyLeaveRequest__c.EPA_CalculatedBusinessDays__c}
+
+View the request: {!EPA_StudyLeaveRequest__c.Link}
+
+Please review this request at your earliest convenience.
