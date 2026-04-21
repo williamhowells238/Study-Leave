@@ -89,3 +89,20 @@ Agent: Developer Agent
 Branch: feature/014
 PR: https://github.com/williamhowells238/Study-Leave/pull/15
 Summary: Created a text email template (EPA_ManagerSubmissionNotification_EmailTemplate) in the EPA_StudyLeave folder containing apprentice name, start/end dates, leave category, calculated business days, and a record link. Modified the existing approval process (EPA_ManagerApproval_ApprovalProcess) to use this template via the emailTemplate property, which sends the notification to the assigned approver (manager via User hierarchy) on submission. Deviated from the solution plan by not creating a separate Workflow Email Alert, as Salesforce email alerts cannot resolve the manager dynamically without an Email-type field — the approval process built-in emailTemplate is the standard pattern for this use case.
+
+## PR Review - story-014: email notification to manager on study leave request submission
+
+Result: Approved
+
+### Summary
+- All four changed files reviewed: email template (.email + .email-meta.xml), email folder metadata, and approval process modification.
+- Naming conventions follow the `EPA_CamelCaseName_Suffix` pattern defined in project conventions.
+- Email template contains all merge fields required by the acceptance criteria: apprentice name, start date, end date, leave category, calculated business days, and a record link.
+- Subject line clearly identifies the notification as a study leave request submission.
+- The deviation from the solution plan (using the approval process `emailTemplate` property instead of a separate Workflow Email Alert) is architecturally sound. Salesforce Workflow Email Alerts require Email-type recipient fields, which cannot dynamically resolve the manager via the User hierarchy. The approval process `emailTemplate` property is the standard Salesforce pattern for sending notifications to the assigned approver on submission.
+- The approval process change is minimal and clean — a single property addition with no impact on existing approval logic.
+- No Apex code in scope — no governor limit, sharing model, or security concerns apply.
+- Git conventions (branch naming, PR title, target branch) all comply with project standards.
+
+### Changes to be made
+- None. PR is approved as-is.
