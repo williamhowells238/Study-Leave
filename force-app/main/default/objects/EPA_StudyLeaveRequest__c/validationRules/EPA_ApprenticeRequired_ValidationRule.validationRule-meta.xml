@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_ApprenticeRequired_ValidationRule</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(EPA_Apprentice__c)</errorConditionFormula>
+    <errorDisplayField>EPA_Apprentice__c</errorDisplayField>
+    <errorMessage>Apprentice is required. Please select an apprentice for this Study Leave Request.</errorMessage>
+</ValidationRule>

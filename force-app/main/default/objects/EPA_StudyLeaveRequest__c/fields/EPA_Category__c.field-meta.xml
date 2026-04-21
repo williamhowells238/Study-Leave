@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_Category__c</fullName>
+    <label>Category</label>
+    <type>Lookup</type>
+    <required>false</required>
+    <referenceTo>EPA_LeaveCategory__c</referenceTo>
+    <relationshipLabel>Study Leave Requests (Category)</relationshipLabel>
+    <relationshipName>StudyLeaveRequestsByCategory</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
+</CustomField>
