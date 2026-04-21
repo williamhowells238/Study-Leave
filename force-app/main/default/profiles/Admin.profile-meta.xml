@@ -6,17 +6,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_CalculatedBusinessDays__c</field>
-        <editable>true</editable>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_Status__c</field>
-        <editable>true</editable>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <field>EPA_StudyLeaveRequest__c.EPA_Apprentice__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <field>EPA_StudyLeaveRequest__c.EPA_CalculatedBusinessDays__c</field>
         <editable>true</editable>
         <readable>true</readable>
     </fieldPermissions>
@@ -25,4 +20,21 @@
         <editable>true</editable>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <field>EPA_StudyLeaveRequest__c.EPA_Status__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <tabVisibilities>
+        <tab>EPA_StudyLeaveRequest__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>EPA_LeaveCategory__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>EPA_PublicHoliday__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
 </Profile>
