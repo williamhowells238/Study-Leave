@@ -109,3 +109,27 @@ Agent: Developer Agent
 Branch: feature/story023
 PR: https://github.com/williamhowells238/Study-Leave/pull/11
 Summary: Created three permission set metadata files (EPA_StudyLeaveApprentice_PermissionSet, EPA_StudyLeaveManager_PermissionSet, EPA_StudyLeaveAdministrator_PermissionSet) following the solution plan. Required fields (EPA_StartDate__c, EPA_EndDate__c, EPA_HolidayDate__c, EPA_AnnualAllowanceDays__c) were excluded from field permissions as Salesforce automatically grants access to required fields. Used tabSettings (not tabVisibilities) and PermissionSetTabVisibility enum values (Visible/None). Deployed successfully to sprint003 scratch org; all 21 Apex tests passed at 100%.
+
+## PR Review - story-023: create permission sets for role-specific access
+
+Result: Rejected
+
+### Summary
+- **Naming conventions**: All three permission set file names follow the `EPA_CamelCaseName_PermissionSet` convention. Labels match the acceptance criteria ("Study Leave Apprentice", "Study Leave Manager", "Study Leave Administrator"). ✅
+- **EPA_StudyLeaveApprentice_PermissionSet**: Correctly grants Create, Read, Edit on `EPA_StudyLeaveRequest__c` and Read on `EPA_LeaveCategory__c`. Field-level security is correctly scoped — editable fields limited to `EPA_Category__c`, read-only for `EPA_Apprentice__c`, `EPA_CalculatedBusinessDays__c`, `EPA_Status__c`. No unnecessary access granted. Follows least privilege. ✅
+- **EPA_StudyLeaveManager_PermissionSet**: Correctly grants Read-only on both objects. Field-level security is read-only across the board. Approval actions correctly deferred to Approval Process (Story 013). ✅ However, contains a **duplicate field permission entry** for `EPA_StudyLeaveRequest__c.EPA_Category__c`. ❌
+- **EPA_StudyLeaveAdministrator_PermissionSet**: Grants full CRUD + ViewAll + ModifyAll on `EPA_StudyLeaveRequest__c`, `EPA_LeaveCategory__c`, and `EPA_PublicHoliday__c`. However, **`EPA_StudyLeaveAllowance__mdt` is missing entirely** — no object permissions, no field permissions. The acceptance criteria explicitly require "full CRUD access to all custom objects: Study Leave Requests, Leave Categories, Public Holidays, **and Study Leave Allowance**". This fails the acceptance criteria. ❌ Additionally, contains **duplicate field permission entries** for `EPA_StudyLeaveRequest__c.EPA_Category__c` and `EPA_LeaveCategory__c.EPA_Description__c`. ❌
+- **Required field exclusions**: The developer's decision to exclude required fields (`EPA_StartDate__c`, `EPA_EndDate__c`, `EPA_HolidayDate__c`, `EPA_AnnualAllowanceDays__c`) from field permissions is correct — Salesforce automatically grants access to required fields. ✅
+- **Tab settings**: Correctly use `tabSettings` with `Visible`/`None` enum values. ✅
+
+### Changes to be made
+1. **[Critical] Add `EPA_StudyLeaveAllowance__mdt` object permissions to `EPA_StudyLeaveAdministrator_PermissionSet`**: Add an `<objectPermissions>` block granting full CRUD + ViewAll + ModifyAll on `EPA_StudyLeaveAllowance__mdt`. This is required by the acceptance criteria. Note: `EPA_AnnualAllowanceDays__c` is a required field, so no field permission entry is needed for it.
+2. **[Medium] Remove duplicate field permission entry in `EPA_StudyLeaveManager_PermissionSet`**: The field `EPA_StudyLeaveRequest__c.EPA_Category__c` appears twice. Remove one duplicate entry.
+3. **[Medium] Remove duplicate field permission entries in `EPA_StudyLeaveAdministrator_PermissionSet`**: The fields `EPA_StudyLeaveRequest__c.EPA_Category__c` and `EPA_LeaveCategory__c.EPA_Description__c` each appear twice. Remove the duplicate entries.
+
+## Fix Record
+
+Agent: Developer Agent
+Branch: feature/story023
+PR: https://github.com/williamhowells238/Study-Leave/pull/11
+Summary: Fixed all three PR review rejection issues — added EPA_StudyLeaveAllowance__mdt object permissions (full CRUD + ViewAll + ModifyAll) to EPA_StudyLeaveAdministrator_PermissionSet, removed duplicate EPA_Category__c field permission from EPA_StudyLeaveManager_PermissionSet, and removed duplicate EPA_Category__c and EPA_Description__c field permissions from EPA_StudyLeaveAdministrator_PermissionSet. Deployed successfully to sprint003 scratch org; all 21 Apex tests passed at 100%.
