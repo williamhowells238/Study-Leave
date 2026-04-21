@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
+        <field>EPA_LeaveCategory__c.EPA_Description__c</field>
+        <editable>true</editable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <field>EPA_StudyLeaveRequest__c.EPA_CalculatedBusinessDays__c</field>
         <editable>true</editable>
         <readable>true</readable>
