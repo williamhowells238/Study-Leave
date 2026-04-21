@@ -112,3 +112,21 @@ Agent: Developer Agent
 Branch: feature/story022
 PR: https://github.com/williamhowells238/Study-Leave/pull/7
 Summary: Created three custom tabs (EPA_StudyLeaveRequest__c, EPA_LeaveCategory__c, EPA_PublicHoliday__c) and three custom profiles (EPA Apprentice, EPA Line Manager, EPA System Administrator) as metadata XML files. Updated the Admin profile with tab visibilities and additional field permissions. Required fields (EPA_StartDate__c, EPA_EndDate__c, EPA_HolidayDate__c) were excluded from field permissions as Salesforce does not allow deploying permissions on required fields. Deployed successfully to sprint002 scratch org (25/25 components) with all 12 Apex tests passing at 97% coverage.
+
+## PR Review - story-022: configure user profiles for Apprentice, Line Manager, and System Administrator
+
+Result: Approved
+
+### Summary
+- All 5 acceptance criteria are fully satisfied by the implementation.
+- Three custom profiles (EPA Apprentice, EPA Line Manager, EPA System Administrator) are correctly configured with differentiated object permissions, field-level security, and tab visibility settings matching the solution plan.
+- Three custom tabs (EPA_StudyLeaveRequest__c, EPA_LeaveCategory__c, EPA_PublicHoliday__c) created as prerequisites for profile tab visibility configuration.
+- Admin profile updated with tab visibilities and reordered field permissions — no functional change to existing permissions.
+- Naming conventions comply with project standards (EPA_ prefix on all components, branch naming, PR title format).
+- XML metadata is well-formed with correct structure for all profile and tab files.
+- Required fields (EPA_StartDate__c, EPA_EndDate__c, EPA_HolidayDate__c) correctly excluded from field permissions — this is a valid Salesforce platform constraint.
+- Deployment verified: 25/25 components, 12/12 Apex tests passing, 97% code coverage.
+- No high-severity issues identified. No code quality concerns.
+
+### Changes to be made
+- None. PR approved for merge.
