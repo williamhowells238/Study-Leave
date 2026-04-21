@@ -90,3 +90,19 @@ Agent: Developer Agent
 Branch: feature/story004
 PR: https://github.com/williamhowells238/Study-Leave/pull/4
 Summary: Created EPA_PublicHoliday__c custom object with EPA_HolidayDate__c (Date, required) field and standard Name field (Text). Deployed to sprint001 scratch org and verified all CRUD operations. Deviation from solution plan: the unique constraint on EPA_HolidayDate__c could not be applied as Salesforce does not support the unique attribute on Date fields, and Matching Rules also do not support Date fields. Uniqueness enforcement will need to be addressed via Apex trigger or application logic in a future story.
+
+## PR Review - story-004: Create Public Holiday custom object
+
+Result: Approved
+
+### Summary
+- All changed files pass Salesforce Code Analyzer with 0 violations.
+- Naming conventions follow project standards (`EPA_PublicHoliday__c`, `EPA_HolidayDate__c`).
+- Object metadata is correctly configured: labels, name field (Text), deployment status (Deployed), sharing model (ReadWrite), and features (reports, search, activities, history) all align with the solution plan.
+- Field metadata for `EPA_HolidayDate__c` is correctly defined as Date, required.
+- The documented deviation regarding the `unique` constraint on the Date field is a genuine Salesforce platform limitation. The developer correctly identified this, attempted Matching Rules as an alternative, and documented the outcome with a forward plan for Apex-based enforcement. This is acceptable and does not block approval.
+- PR title, branch name, and target branch all conform to project Git conventions.
+- All acceptance criteria are satisfied, with the uniqueness constraint noted as a known gap to be addressed in a future story.
+
+### Changes to be made
+- None. PR is approved as-is.
