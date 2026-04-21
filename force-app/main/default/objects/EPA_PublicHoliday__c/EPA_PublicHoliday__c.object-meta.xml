@@ -7,7 +7,7 @@
         <type>Text</type>
     </nameField>
     <deploymentStatus>Deployed</deploymentStatus>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
     <enableActivities>true</enableActivities>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
