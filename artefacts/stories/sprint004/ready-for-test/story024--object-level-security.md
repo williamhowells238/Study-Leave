@@ -169,3 +169,21 @@ Agent: Developer Agent
 Branch: feature/024
 PR: https://github.com/williamhowells238/Study-Leave/pull/13
 Summary: Restored the accidentally deleted file `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md` by checking it out from the Dev1 branch. The file was deleted in commit f7d99c1 alongside story-024 changes. No functional changes to the story-024 implementation were needed — the CRUD matrix configuration was confirmed correct by the Architect review.
+
+## PR Re-Review - story-024: configure object-level security on profiles and permission sets
+
+Result: Approved
+
+### Summary
+- **Fix Verified**: The previously deleted file `artefacts/stories/sprint004/ready-for-test/story013--manager-approval-process.md` is no longer removed by this PR. The PR diff now contains only 5 files — all scoped to story 024. The blocking issue from the prior review is resolved.
+- **Acceptance Criteria (CRUD Matrix)**: Confirmed unchanged from previous review — all four acceptance criteria remain fully satisfied.
+  - **Apprentice** — Profile: Create/Read/Edit on `EPA_StudyLeaveRequest__c`, Read on `EPA_LeaveCategory__c`, Read on `EPA_PublicHoliday__c`. PermSet adds Read on `EPA_PublicHoliday__c` and `EPA_StudyLeaveAllowance__mdt`. Correct.
+  - **Line Manager** — Profile: Read on `EPA_StudyLeaveRequest__c`, Read on `EPA_LeaveCategory__c`, Read on `EPA_PublicHoliday__c`. PermSet adds Read on `EPA_PublicHoliday__c` and `EPA_StudyLeaveAllowance__mdt`. Correct.
+  - **System Administrator** — Profile and PermSet already complete. No changes needed. Correct.
+- **Code Quality**: No code analysis required — changes are purely declarative XML metadata.
+- **Naming Conventions**: All components follow `EPA_CamelCaseName_Suffix` standard. Correct.
+- **Git Conventions**: Branch `feature/024` targets `Dev1`, PR title follows `story-024: ...` format. Correct.
+- **Solution Plan Alignment**: Implementation matches the solution plan exactly.
+
+### Changes to be made
+- None — PR is approved for merge.
