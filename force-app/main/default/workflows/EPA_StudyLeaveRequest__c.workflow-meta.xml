@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>EPA_StatusApproved_FieldUpdate</fullName>
+        <description>Sets the Status field to Approved when the manager approves the study leave request</description>
+        <field>EPA_Status__c</field>
+        <literalValue>Approved</literalValue>
+        <name>EPA Status Approved Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>EPA_StatusRejected_FieldUpdate</fullName>
+        <description>Sets the Status field to Rejected when the manager rejects the study leave request</description>
+        <field>EPA_Status__c</field>
+        <literalValue>Rejected</literalValue>
+        <name>EPA Status Rejected Field Update</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+</Workflow>
