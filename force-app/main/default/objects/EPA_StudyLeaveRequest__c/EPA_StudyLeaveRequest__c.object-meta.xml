@@ -9,7 +9,7 @@
         <startingNumber>1</startingNumber>
     </nameField>
     <deploymentStatus>Deployed</deploymentStatus>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <enableActivities>true</enableActivities>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
