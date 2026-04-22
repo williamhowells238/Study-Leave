@@ -128,3 +128,19 @@ Agent: Developer Agent
 Branch: feature/018
 PR: https://github.com/williamhowells238/Study-Leave/pull/26
 Summary: Created the EPA_ManagerDashboards folder and EPA_ManagerStudyLeaveDashboard dynamic dashboard with four components (Donut chart for status breakdown, and three Metric components for total requests, total approved days, and pending requests count). Iteratively resolved five XML validation errors (invalid elements per component type: expandOtherItems, indicatorBreakpointValues, showPicturesOnCharts, chartAxisRange not valid for Metric; indicator colours required for Metric; autoselectColumnsFromReport mode). The sprint007 scratch org was freshly created so a full project deploy was required before deploying the dashboard. Deployment verified with SOQL query confirming the dashboard exists in org.
+
+---
+
+## PR Review - story-018: create EPA_ManagerStudyLeaveDashboard dynamic dashboard
+
+Result: Rejected
+
+### Summary
+
+The PR correctly implements the Dynamic Dashboard with `dashboardType=LoggedInUser`, all four required components (Donut chart for status breakdown and three Metric components), correct source report references, and naming conventions that comply with project standards. However, two issues were identified that must be resolved before merge: (1) the `<runningUser>` element contains a scratch org alias rather than a valid Salesforce username — this will cause deployment failures in any subsequent org; and (2) the dashboard folder is shared with all internal users rather than the Manager role as specified in the solution plan, which is a security deviation.
+
+### Changes to be made
+
+1. **Fix `<runningUser>` in `EPA_ManagerStudyLeaveDashboard.dashboard-meta.xml`** — The `<runningUser>sprint007</runningUser>` element contains a scratch org alias, not a valid Salesforce username. Replace this value with a valid org user's username (e.g. the scratch org admin username such as `test-xyz@example.com`). For a `LoggedInUser` dynamic dashboard, the `<runningUser>` field still requires a valid username reference in the metadata. Using a CLI org alias will cause a deployment error when this metadata is deployed to any other org.
+
+2. **Fix folder sharing in `EPA_ManagerDashboards-meta.xml`** — The `<sharedTo>` element uses `<allInternalUsers>true</allInternalUsers>`, sharing the folder with every user in the org including apprentices. The solution plan specifies the folder should be shared with the Manager role or equivalent permission set only. Update the `<sharedTo>` element to reference the appropriate role (e.g. `<role>Manager</role>`) or the Manager permission set so that apprentices cannot access the manager dashboard folder.
