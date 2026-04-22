@@ -107,3 +107,23 @@ Agent: Developer Agent
 Branch: feature/019
 PR: https://github.com/williamhowells238/Study-Leave/pull/24
 Summary: No new code was required for Story 019. All five acceptance criteria are fully satisfied by the existing Story 012 implementation (EPA_StudyLeaveBalance_Class, epa_StudyLeaveBalance_LWC, EPA_StudyLeaveBalance_FlexiPage, EPA_StudyLeaveBalance custom tab, and EPA_StudyLeaveApprentice_PermissionSet). Deployment to sprint006 scratch org succeeded (65 components, 0 errors). Apex tests passed 27/28 (96%) — the single failure is a pre-existing bulk test governor limit issue in EPA_AnnualAllowanceValidation_TestClass unrelated to this story.
+
+## PR Review - story-019: Apprentice Balance and History View - verified existing implementation
+
+Result: Approved
+
+### Summary
+- The PR contains only a story file update with the Implementation Record — no new code changes, which is correct given the Developer's claim that all acceptance criteria are satisfied by existing Story 012 components.
+- Independent verification of each acceptance criterion against the existing codebase confirms full coverage:
+  - **AC1 (Balance display on navigation)**: Confirmed — `EPA_StudyLeaveBalance` custom tab navigates to `EPA_StudyLeaveBalance_FlexiPage` which hosts `epa_StudyLeaveBalance_LWC`. The LWC displays the remaining annual balance via `getBalanceSummary()` for the current calendar year.
+  - **AC2 (History columns)**: Confirmed — `lightning-datatable` columns include Start Date (`EPA_StartDate__c`), End Date (`EPA_EndDate__c`), Leave Category (`categoryName` from `EPA_Category__r.Name`), Business Days (`EPA_CalculatedBusinessDays__c`), and Status (`EPA_Status__c`).
+  - **AC3 (Balance calculation)**: Confirmed — `getBalanceSummary()` computes `annualAllowance - SUM(EPA_CalculatedBusinessDays__c)` for requests with Status IN ('Approved', 'Pending') within the current calendar year date range.
+  - **AC4 (All statuses visible)**: Confirmed — `getRequestHistory()` applies no status filter in its SOQL WHERE clause, returning Pending, Approved, Rejected, and Cancelled requests.
+  - **AC5 (Standard Lightning components)**: Confirmed — uses `lightning-card`, `lightning-datatable`, SLDS utility classes, and `flexipage:defaultAppHomeTemplate` App Page template.
+- Naming conventions comply with project standards (`EPA_` prefix, correct suffixes).
+- Apex class uses `with sharing` and `WITH USER_MODE` for security enforcement.
+- No code quality issues identified (no new code to review).
+- The 27/28 test pass rate is acceptable; the single failure is a pre-existing issue unrelated to this story.
+
+### Changes to be made
+- None. PR is approved as-is.
