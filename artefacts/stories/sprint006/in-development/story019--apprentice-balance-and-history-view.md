@@ -105,5 +105,5 @@ All components listed below **already exist** from Story 012 implementation. Sto
 
 Agent: Developer Agent
 Branch: feature/019
-PR: _pending_
+PR: https://github.com/williamhowells238/Study-Leave/pull/24
 Summary: No new code was required for Story 019. All five acceptance criteria are fully satisfied by the existing Story 012 implementation (EPA_StudyLeaveBalance_Class, epa_StudyLeaveBalance_LWC, EPA_StudyLeaveBalance_FlexiPage, EPA_StudyLeaveBalance custom tab, and EPA_StudyLeaveApprentice_PermissionSet). Deployment to sprint006 scratch org succeeded (65 components, 0 errors). Apex tests passed 27/28 (96%) — the single failure is a pre-existing bulk test governor limit issue in EPA_AnnualAllowanceValidation_TestClass unrelated to this story.
