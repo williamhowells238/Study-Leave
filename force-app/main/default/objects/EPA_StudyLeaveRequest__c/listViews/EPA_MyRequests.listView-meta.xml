@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_MyRequests</fullName>
+    <columns>NAME</columns>
+    <columns>EPA_Apprentice__c</columns>
+    <columns>EPA_StartDate__c</columns>
+    <columns>EPA_EndDate__c</columns>
+    <columns>EPA_Category__c</columns>
+    <columns>EPA_CalculatedBusinessDays__c</columns>
+    <columns>EPA_Status__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>EPA_Apprentice__c</field>
+        <operation>equals</operation>
+        <value>$CurrentUser</value>
+    </filters>
+    <label>My Requests</label>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>
