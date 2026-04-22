@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomNotificationType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customNotifTypeName>EPA_StudyLeaveDecision_NotificationType</customNotifTypeName>
+    <description>Notifies the apprentice when their study leave request is approved or rejected.</description>
+    <desktop>true</desktop>
+    <masterLabel>EPA Study Leave Decision</masterLabel>
+    <mobile>true</mobile>
+    <slack>false</slack>
+</CustomNotificationType>
