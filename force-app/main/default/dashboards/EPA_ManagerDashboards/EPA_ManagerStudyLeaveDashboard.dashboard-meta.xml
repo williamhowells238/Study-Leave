@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Dashboard xmlns="http://soap.sforce.com/2006/04/metadata">
+    <backgroundEndColor>#FFFFFF</backgroundEndColor>
+    <backgroundFadeDirection>Diagonal</backgroundFadeDirection>
+    <backgroundStartColor>#FFFFFF</backgroundStartColor>
+    <dashboardType>LoggedInUser</dashboardType>
+    <description>Manager dashboard showing study leave requests for direct-report apprentices. Dynamic Dashboard scoped to the logged-in manager.</description>
+    <leftSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+            <chartAxisRange>Auto</chartAxisRange>
+            <componentType>Donut</componentType>
+            <displayUnits>Auto</displayUnits>
+            <drillEnabled>false</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <enableHover>true</enableHover>
+            <footer>Scoped to your direct-report apprentices</footer>
+            <header>Requests by Status</header>
+            <report>EPA_StudyLeaveReports/EPA_StudyLeaveByStatus</report>
+            <showPercentage>true</showPercentage>
+            <showValues>true</showValues>
+            <sortBy>RowLabelAscending</sortBy>
+            <title>Requests by Status</title>
+            <useReportChart>false</useReportChart>
+        </components>
+    </leftSection>
+    <middleSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+            <componentType>Metric</componentType>
+            <drillEnabled>false</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <footer>All statuses included</footer>
+            <header>Total Requests</header>
+            <indicatorHighColor>#54C893</indicatorHighColor>
+            <indicatorLowColor>#E74C3C</indicatorLowColor>
+            <indicatorMiddleColor>#F5A623</indicatorMiddleColor>
+            <metricLabel>Total Requests</metricLabel>
+            <report>EPA_StudyLeaveReports/EPA_StudyLeaveByStatus</report>
+            <title>Total Requests</title>
+        </components>
+        <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+            <componentType>Metric</componentType>
+            <drillEnabled>false</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <footer>Approved requests only</footer>
+            <header>Total Approved Days</header>
+            <indicatorHighColor>#54C893</indicatorHighColor>
+            <indicatorLowColor>#E74C3C</indicatorLowColor>
+            <indicatorMiddleColor>#F5A623</indicatorMiddleColor>
+            <metricLabel>Total Approved Days</metricLabel>
+            <report>EPA_StudyLeaveReports/EPA_StudyLeaveByApprentice</report>
+            <title>Total Approved Days</title>
+        </components>
+    </middleSection>
+    <rightSection>
+        <columnSize>Medium</columnSize>
+        <components>
+            <autoselectColumnsFromReport>true</autoselectColumnsFromReport>
+            <componentType>Metric</componentType>
+            <drillEnabled>false</drillEnabled>
+            <drillToDetailEnabled>false</drillToDetailEnabled>
+            <footer>Awaiting approval action</footer>
+            <header>Pending Requests</header>
+            <indicatorHighColor>#E74C3C</indicatorHighColor>
+            <indicatorLowColor>#54C893</indicatorLowColor>
+            <indicatorMiddleColor>#F5A623</indicatorMiddleColor>
+            <metricLabel>Pending Requests</metricLabel>
+            <report>EPA_StudyLeaveReports/EPA_PendingRequestsAwaitingApproval</report>
+            <title>Pending Requests</title>
+        </components>
+    </rightSection>
+    <runningUser>sprint007</runningUser>
+    <textColor>#000000</textColor>
+    <title>EPA Study Leave Manager Dashboard</title>
+    <titleColor>#000000</titleColor>
+    <titleSize>12</titleSize>
+</Dashboard>
