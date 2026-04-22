@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EPA_EditPastStartDate_ValidationRule</fullName>
+    <active>true</active>
+    <errorConditionFormula>(ISCHANGED(EPA_StartDate__c) || ISCHANGED(EPA_EndDate__c) || ISCHANGED(EPA_Category__c)) &amp;&amp; PRIORVALUE(EPA_StartDate__c) &lt;= TODAY()</errorConditionFormula>
+    <errorDisplayField>EPA_StartDate__c</errorDisplayField>
+    <errorMessage>This request can no longer be edited as the leave start date has passed.</errorMessage>
+</ValidationRule>
