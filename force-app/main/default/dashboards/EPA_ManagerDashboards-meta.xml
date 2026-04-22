@@ -3,7 +3,9 @@
     <accessType>Hidden</accessType>
     <name>EPA_ManagerDashboards</name>
     <publicFolderAccess>ReadOnly</publicFolderAccess>
-    <sharedTo>
-        <allInternalUsers>true</allInternalUsers>
-    </sharedTo>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>EPA_LineManager</sharedTo>
+        <sharedToType>Role</sharedToType>
+    </folderShares>
 </DashboardFolder>

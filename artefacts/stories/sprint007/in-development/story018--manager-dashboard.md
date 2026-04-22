@@ -144,3 +144,12 @@ The PR correctly implements the Dynamic Dashboard with `dashboardType=LoggedInUs
 1. **Fix `<runningUser>` in `EPA_ManagerStudyLeaveDashboard.dashboard-meta.xml`** — The `<runningUser>sprint007</runningUser>` element contains a scratch org alias, not a valid Salesforce username. Replace this value with a valid org user's username (e.g. the scratch org admin username such as `test-xyz@example.com`). For a `LoggedInUser` dynamic dashboard, the `<runningUser>` field still requires a valid username reference in the metadata. Using a CLI org alias will cause a deployment error when this metadata is deployed to any other org.
 
 2. **Fix folder sharing in `EPA_ManagerDashboards-meta.xml`** — The `<sharedTo>` element uses `<allInternalUsers>true</allInternalUsers>`, sharing the folder with every user in the org including apprentices. The solution plan specifies the folder should be shared with the Manager role or equivalent permission set only. Update the `<sharedTo>` element to reference the appropriate role (e.g. `<role>Manager</role>`) or the Manager permission set so that apprentices cannot access the manager dashboard folder.
+
+---
+
+## Fix Record
+
+Agent: Developer Agent
+Branch: feature/018
+PR: https://github.com/williamhowells238/Study-Leave/pull/26
+Summary: Fixed two architect PR rejection issues. (1) Replaced `<runningUser>sprint007</runningUser>` with the actual scratch org admin username `test-plwtvmcy6ksf@example.com` in EPA_ManagerStudyLeaveDashboard.dashboard-meta.xml. (2) Replaced `<allInternalUsers>true</allInternalUsers>` folder sharing in EPA_ManagerDashboards-meta.xml with `<folderShares>` targeting the new `EPA_LineManager` custom role with `View` access — `PermissionSet` is not a valid FolderSharedToType for DashboardFolder in this org edition, so a custom UserRole (`EPA_LineManager`) was created and deployed. All three components (Dashboard, DashboardFolder, Role) deployed successfully to sprint007.
