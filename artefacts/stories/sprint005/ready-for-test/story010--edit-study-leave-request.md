@@ -140,3 +140,14 @@ Agent: Developer Agent
 Branch: feature/010
 PR: https://github.com/williamhowells238/Study-Leave/pull/18
 Summary: Restored accidentally deleted `artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md` by checking it out from Dev1 and committing as an amendment to the feature/010 branch.
+
+## PR Re-Review - story-010: implement edit study leave request functionality
+
+Result: Approved
+
+### Summary
+- Re-review following Developer fix for the previous rejection (accidental deletion of `story011--cancel-study-leave-request.md`).
+- The `story011--cancel-study-leave-request.md` file is confirmed restored and present in `sprint005/ready-for-test`.
+- PR now contains only Story 010 changes: validation rule, before-save flow, screen flow, quick action, and story file.
+- All implementation components were architecturally approved in the initial review — no code changes were required, only the file restoration.
+- No new issues found. PR is clean and ready to merge.
