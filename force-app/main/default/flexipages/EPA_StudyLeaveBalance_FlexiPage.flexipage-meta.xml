@@ -3,7 +3,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>c:epa_StudyLeaveBalance_LWC</componentName>
+                <componentName>epa_StudyLeaveBalance_LWC</componentName>
                 <identifier>epa_StudyLeaveBalance_LWC_instance</identifier>
             </componentInstance>
         </itemInstances>

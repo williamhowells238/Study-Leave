@@ -3,5 +3,5 @@
     <description>View your remaining study leave balance and request history.</description>
     <flexiPage>EPA_StudyLeaveBalance_FlexiPage</flexiPage>
     <label>Study Leave Balance</label>
-    <motif>Custom68: Scales</motif>
+    <motif>Custom68: Globe</motif>
 </CustomTab>
