@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <name>Study Leave Requests by Apprentice</name>
+    <description>Groups study leave requests by apprentice, showing request counts and total approved business days per apprentice.</description>
+    <reportType>EPA_StudyLeaveWithApprentice__c</reportType>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>EPA_StudyLeaveRequest__c$EPA_Apprentice__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <columns>
+        <field>EPA_StudyLeaveRequest__c$Name</field>
+    </columns>
+    <columns>
+        <field>EPA_StudyLeaveRequest__c$EPA_Status__c</field>
+    </columns>
+    <columns>
+        <field>EPA_StudyLeaveRequest__c$EPA_StartDate__c</field>
+    </columns>
+    <columns>
+        <field>EPA_StudyLeaveRequest__c$EPA_EndDate__c</field>
+    </columns>
+    <columns>
+        <aggregateTypes>Sum</aggregateTypes>
+        <field>EPA_StudyLeaveRequest__c$EPA_CalculatedBusinessDays__c</field>
+    </columns>
+    <columns>
+        <field>EPA_StudyLeaveRequest__c$EPA_Category__c</field>
+    </columns>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>EPA_StudyLeaveRequest__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
