@@ -128,7 +128,7 @@ As a **System Administrator**, I want field-level security configured on all cus
 
 Agent: Developer Agent
 Branch: feature/025
-PR: pending
+PR: https://github.com/williamhowells238/Study-Leave/pull/20
 Summary: During implementation, all four fields identified in the solution plan as needing new fieldPermissions entries (EPA_StartDate__c, EPA_EndDate__c, EPA_HolidayDate__c, EPA_AnnualAllowanceDays__c) were found to be **required fields** in the scratch org. Salesforce does not allow explicit FLS configuration on required fields — they are always visible and editable to any user with object-level access. Deployment attempts with these fieldPermissions entries failed with "You cannot deploy to a required field" errors.
 
 Verification confirmed that the existing FLS configuration already fully satisfies the acceptance criteria:
