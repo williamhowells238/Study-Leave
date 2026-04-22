@@ -115,3 +115,21 @@ Agent: Developer Agent
 Branch: feature/010
 PR: https://github.com/williamhowells238/Study-Leave/pull/18
 Summary: Implemented all four components per the solution plan — validation rule (EPA_EditPastStartDate_ValidationRule), before-save record-triggered flow (EPA_EditStatusReset_Flow) with Decision element to check field changes via $Record__Prior, screen flow (EPA_EditStudyLeaveRequest_Flow) with lookup component for Category, and a Quick Action (EPA_EditRequest). Resolved a flow deployment error caused by a duplicate developer name for the Leave_Category screen field and variable. All components deployed successfully to sprint005 scratch org. All 21 existing Apex tests pass with 100% pass rate — no regressions.
+
+## PR Review - story-010: implement edit study leave request functionality
+
+Result: Rejected
+
+### Summary
+- **Salesforce Code Analyzer**: 0 violations across all changed files (flows, validation rule, quick action).
+- **Apex Tests**: All 21 tests pass — no regressions.
+- **Naming Conventions**: All components follow the `EPA_` prefix convention per project conventions (EPA_EditPastStartDate_ValidationRule, EPA_EditStatusReset_Flow, EPA_EditStudyLeaveRequest_Flow, EPA_EditRequest Quick Action).
+- **EPA_EditPastStartDate_ValidationRule**: Correct formula using `ISCHANGED()` and `PRIORVALUE()` with `<= TODAY()` boundary. Error message matches acceptance criteria verbatim.
+- **EPA_EditStatusReset_Flow**: Correctly configured as a before-save record-triggered flow on Update. Entry condition filters on Status = "Approved". Decision element properly uses `$Record__Prior` to detect field changes on Start Date, End Date, and Category. Assignment resets Status to "Pending".
+- **EPA_EditStudyLeaveRequest_Flow**: Well-structured screen flow with `recordId` input variable, Get Records lookup, Decision for start date guard (UI-level), Edit Screen with pre-populated fields (Start Date, End Date, Category via lookup component), Update Records with fault connector to error screen displaying `$Flow.FaultMessage`, and a success confirmation screen. Matches the solution plan and existing Cancel flow pattern.
+- **EPA_EditRequest Quick Action**: Correctly configured as a Flow-type quick action pointing to `EPA_EditStudyLeaveRequest_Flow`.
+- **Acceptance Criteria Coverage**: All four acceptance criteria are addressed — future-date editing (screen flow), validation re-application (existing trigger/rules fire on update), past-date blocking (validation rule + flow decision), and Approved-to-Pending status reset (before-save flow).
+- **Critical Issue**: Commit `f674e92` accidentally deletes `artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md`. This is an unrelated file that was likely swept up by a broad `git add -A`. Merging this PR would remove the Story 011 file from `ready-for-test`. This must be corrected before approval.
+
+### Changes to be made
+1. **Restore `story011--cancel-study-leave-request.md`** — Remove the deletion of `artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md` from the PR. Run `git checkout Dev1 -- artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md`, commit, and push to the `feature/010` branch. The PR must only contain changes related to Story 010.
