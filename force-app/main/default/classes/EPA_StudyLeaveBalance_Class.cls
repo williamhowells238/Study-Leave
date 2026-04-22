@@ -80,7 +80,7 @@ public with sharing class EPA_StudyLeaveBalance_Class {
 
         return [
             SELECT EPA_StartDate__c, EPA_EndDate__c, EPA_Category__c,
-                   EPA_CalculatedBusinessDays__c, EPA_Status__c
+                   EPA_Category__r.Name, EPA_CalculatedBusinessDays__c, EPA_Status__c
             FROM EPA_StudyLeaveRequest__c
             WHERE EPA_Apprentice__c = :currentUserId
             AND EPA_StartDate__c >= :yearStart

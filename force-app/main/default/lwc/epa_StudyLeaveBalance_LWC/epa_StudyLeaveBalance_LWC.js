@@ -33,7 +33,7 @@ export default class Epa_StudyLeaveBalance_LWC extends LightningElement {
         if (data) {
             this.requestHistory = data.map(record => ({
                 ...record,
-                categoryName: record.EPA_Category__c
+                categoryName: record.EPA_Category__r?.Name
             }));
             this.historyError = undefined;
         } else if (error) {
