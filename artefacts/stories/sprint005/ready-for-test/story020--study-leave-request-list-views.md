@@ -97,3 +97,22 @@ Agent: Developer Agent
 Branch: feature/020
 PR: https://github.com/williamhowells238/Study-Leave/pull/21
 Summary: Created 4 declarative list view metadata XML files (EPA_AllRequests, EPA_MyRequests, EPA_PendingRequests, EPA_ApprovedRequests) on EPA_StudyLeaveRequest__c. All list views include the required columns (Name, Apprentice, Start Date, End Date, Category, Calculated Business Days, Status) and are shared with all internal users. EPA_MyRequests filters by EPA_Apprentice__c = $CurrentUser. EPA_PendingRequests and EPA_ApprovedRequests filter by EPA_Status__c. Deployed to sprint005 scratch org and verified all 4 list views via SOQL query. No code quality issues — solution is purely declarative XML.
+
+## PR Review - story-020: add study leave request list views
+
+Result: Approved
+
+### Summary
+- All 4 list view metadata XML files (EPA_AllRequests, EPA_MyRequests, EPA_PendingRequests, EPA_ApprovedRequests) are present and well-formed.
+- All list views include the required columns: NAME, EPA_Apprentice__c, EPA_StartDate__c, EPA_EndDate__c, EPA_Category__c, EPA_CalculatedBusinessDays__c, EPA_Status__c — matching AC6.
+- EPA_AllRequests uses filterScope "Everything" with no filters — correct for AC1.
+- EPA_MyRequests filters by EPA_Apprentice__c = $CurrentUser — correctly targets the Apprentice lookup rather than record ownership, as noted in the solution plan risks section.
+- EPA_PendingRequests and EPA_ApprovedRequests filter by EPA_Status__c with correct values — matching the solution plan.
+- All list views are shared with allInternalUsers — appropriate for the use case.
+- Naming conventions follow the EPA_ prefix standard.
+- Git conventions followed: branch `feature/020`, PR title `story-020: add study leave request list views`, target `Dev1`.
+- No code quality issues — solution is purely declarative XML with no Apex or LWC components.
+- Record-level security (AC7) is handled by the object's Private sharing model; no additional configuration required in list views.
+
+### Changes to be made
+- None. All acceptance criteria are met and the implementation aligns with the solution plan.
