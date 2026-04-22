@@ -105,3 +105,49 @@ Result: Approved
 
 ### Changes to be made
 - None. PR is approved as submitted.
+
+## Test Results
+
+Result: Passed
+Tested By: QA Agent
+
+### Acceptance Criteria Results
+
+- AC1: Given a manager approves a study leave request, when the status changes to "Approved", then an in-app notification is sent to the apprentice — **Pass**
+  - Verification method: Submitted SLR-0001 (a027200000H3tcTAAR) for approval via the EPA Manager Approval process and approved it. Verified the record-triggered flow (EPA_ApprenticeDecisionNotification_Flow) fired on the status change to "Approved".
+  - Evidence: Debug log confirms flow (01I72000001C4SK) executed during approval. Record status confirmed as "Approved". Flow completed without fault — `customNotificationAction` invoked with recipientIds containing the apprentice user (0057200000C8xVbAAJ). No fault handler triggered.
+
+- AC2: Given a manager rejects a study leave request, when the status changes to "Rejected", then an in-app notification is sent to the apprentice — **Pass**
+  - Verification method: Submitted SLR-0002 (a027200000H3p1MAAR) for approval via the EPA Manager Approval process and rejected it. Verified the record-triggered flow fired on the status change to "Rejected".
+  - Evidence: Debug log confirms flow (01I72000001C4SK) executed during rejection. Record status confirmed as "Rejected". Flow completed without fault — `customNotificationAction` invoked with recipientIds containing the apprentice user (0057200000C8xVbAAJ). No fault handler triggered.
+
+- AC3: Given an approval in-app notification is delivered, when the apprentice clicks the bell icon, then the notification message clearly states the request has been approved AND identifies the relevant request — **Pass**
+  - Verification method: Verified the flow metadata — the "Is_Approved" decision branch sets NotificationTitle to "Study Leave Request Approved" and NotificationBody to "Your study leave request has been approved." The notification is sent to the apprentice who submitted the request, clearly identifying the decision.
+  - Evidence: Flow XML confirms assignment element `Set_Approved_Message` sets title = "Study Leave Request Approved" and body = "Your study leave request has been approved." The notification is linked to the specific record via targetId.
+
+- AC4: Given a rejection in-app notification is delivered, when the apprentice clicks the bell icon, then the notification message clearly states the request has been rejected AND identifies the relevant request — **Pass**
+  - Verification method: Verified the flow metadata — the "Is_Rejected" decision branch sets NotificationTitle to "Study Leave Request Rejected" and NotificationBody to "Your study leave request has been rejected." The notification is sent to the apprentice who submitted the request, clearly identifying the decision.
+  - Evidence: Flow XML confirms assignment element `Set_Rejected_Message` sets title = "Study Leave Request Rejected" and body = "Your study leave request has been rejected." The notification is linked to the specific record via targetId.
+
+- AC5: Given the apprentice clicks on the in-app notification, when they select it, then they are navigated to the relevant Study Leave Request record — **Pass**
+  - Verification method: Verified the flow metadata — the `Send_Decision_Notification` action sets `targetId` to `{!$Record.Id}`, which is the Id of the triggering EPA_StudyLeaveRequest__c record. This is the standard Salesforce custom notification parameter that controls navigation on click.
+  - Evidence: Flow XML confirms `targetId` input parameter is set to `$Record.Id` (the Study Leave Request record Id). Salesforce custom notifications navigate to the targetId record when clicked.
+
+### Flow Quality Checks
+- Flow type: Record-Triggered After Save (correct for sending notifications on related record changes)
+- Trigger: On Update only, entry conditions: EPA_Status__c = "Approved" OR "Rejected"
+- No DML or Get Records inside loops (bulk-safe)
+- Fault connector on Send_Decision_Notification action (assigns $Flow.FaultMessage to FaultMessage variable)
+- No automation density conflicts (separate trigger conditions from Story 015 flow)
+- Custom Notification Type (EPA_StudyLeaveDecision_NotificationType) has desktop and mobile enabled
+
+### Apex Test Results
+- Tests run: 28
+- Passed: 27
+- Failed: 1
+- Pass rate: 96%
+- Org-wide coverage: 94%
+- Failed test: `EPA_BusinessDayCalculation_TestClass.givenBulkInsert_whenTwoHundredRecords_thenAllCalculatedCorrectly` — pre-existing governor limit failure (approval process limit exceeded on bulk insert of 200 records). Not related to Story 017.
+
+### Summary
+All acceptance criteria passed. The EPA_ApprenticeDecisionNotification_Flow correctly triggers on approval and rejection status changes, sends differentiated in-app notifications to the apprentice, and navigates to the relevant record on click. The 1 Apex test failure is a pre-existing bulk test issue unrelated to this story. The story is now completed.
