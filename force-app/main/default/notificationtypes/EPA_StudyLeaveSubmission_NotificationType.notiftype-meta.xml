@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomNotificationType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customNotifTypeName>EPA_StudyLeaveSubmission_NotificationType</customNotifTypeName>
+    <description>Notifies the line manager when an apprentice submits a study leave request.</description>
+    <desktop>true</desktop>
+    <masterLabel>EPA Study Leave Submission</masterLabel>
+    <mobile>true</mobile>
+    <slack>false</slack>
+</CustomNotificationType>
