@@ -28,6 +28,15 @@
     <columns>
         <field>EPA_StudyLeaveRequest__c$EPA_Category__c</field>
     </columns>
+    <filter>
+        <criteriaItems>
+            <column>EPA_StudyLeaveRequest__c$EPA_Status__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Approved</value>
+        </criteriaItems>
+    </filter>
     <params>
         <name>co</name>
         <value>1</value>

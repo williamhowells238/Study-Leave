@@ -147,3 +147,10 @@ Result: Rejected
 ### Changes to be made
 1. **Remove `scripts/temp_query_rt.apex` from the PR.** This is a temporary development/debug script (HTTP callout to the Reports API) that is not part of the solution deliverables. Remove it from the branch before re-submitting.
 2. **Add a status filter to `EPA_StudyLeaveByApprentice` report.** The acceptance criteria specifies "total approved days per apprentice" and the solution plan states "Filtered to Approved status for the 'total approved days' summary." The current report has no filter on `EPA_Status__c`, so it sums business days across all statuses. Add a filter: `EPA_Status__c EQUALS Approved` to ensure the summary reflects only approved leave days.
+
+## Fix Record
+
+Agent: Developer Agent
+Branch: feature/021-v2
+PR: https://github.com/williamhowells238/Study-Leave/pull/25
+Summary: Fixed both PR review issues — (1) removed temporary dev script `scripts/temp_query_rt.apex` from the branch, (2) added `EPA_Status__c EQUALS Approved` filter to the `EPA_StudyLeaveByApprentice` report so that the business days summary reflects only approved leave days. Deployed successfully to sprint006 scratch org (71 components, 0 errors).
