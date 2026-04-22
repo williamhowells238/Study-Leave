@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>EPA_StudyLeaveRequest__c</baseObject>
+    <category>other</category>
+    <deployed>true</deployed>
+    <description>Study Leave Requests with Apprentice (User) details via the Apprentice lookup. Use this report type for all study leave reporting.</description>
+    <label>Study Leave Requests with Apprentice</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Name</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_Status__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_StartDate__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_EndDate__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_CalculatedBusinessDays__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_Category__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>EPA_Apprentice__c</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>EPA_StudyLeaveRequest__c</table>
+        </columns>
+        <masterLabel>Study Leave Request Fields</masterLabel>
+    </sections>
+</ReportType>
