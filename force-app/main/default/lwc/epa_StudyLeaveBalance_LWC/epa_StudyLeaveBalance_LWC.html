@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="My Study Leave Balance" icon-name="standard:education">
+        <div class="slds-var-p-around_medium">
+            <template if:true={balanceSummary}>
+                <div class="slds-grid slds-gutters slds-var-m-bottom_large">
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-box slds-box_x-small slds-text-align_center">
+                            <p class="slds-text-title slds-var-m-bottom_xx-small">Annual Allowance</p>
+                            <p class="slds-text-heading_large">{balanceSummary.annualAllowance}</p>
+                            <p class="slds-text-body_small">days</p>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-box slds-box_x-small slds-text-align_center">
+                            <p class="slds-text-title slds-var-m-bottom_xx-small">Used / Pending</p>
+                            <p class="slds-text-heading_large">{balanceSummary.consumedDays}</p>
+                            <p class="slds-text-body_small">days</p>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-3">
+                        <div class="slds-box slds-box_x-small slds-text-align_center">
+                            <p class="slds-text-title slds-var-m-bottom_xx-small">Remaining</p>
+                            <p class="slds-text-heading_large">{balanceSummary.remainingDays}</p>
+                            <p class="slds-text-body_small">days</p>
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+            <template if:true={balanceError}>
+                <div class="slds-var-m-bottom_medium" role="alert">
+                    <p class="slds-text-color_error">{balanceError}</p>
+                </div>
+            </template>
+
+            <h2 class="slds-text-heading_small slds-var-m-bottom_small">Request History</h2>
+
+            <template if:true={hasHistory}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={requestHistory}
+                    columns={columns}
+                    hide-checkbox-column
+                ></lightning-datatable>
+            </template>
+
+            <template if:false={hasHistory}>
+                <template if:false={historyError}>
+                    <div class="slds-illustration slds-illustration_small slds-text-align_center">
+                        <p class="slds-text-body_regular">No study leave requests found for this year.</p>
+                    </div>
+                </template>
+            </template>
+
+            <template if:true={historyError}>
+                <div role="alert">
+                    <p class="slds-text-color_error">{historyError}</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
