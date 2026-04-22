@@ -73,4 +73,8 @@
         <tab>EPA_LeaveCategory__c</tab>
         <visibility>None</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>EPA_StudyLeaveBalance</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
 </PermissionSet>
