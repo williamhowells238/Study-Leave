@@ -133,3 +133,10 @@ Result: Rejected
 
 ### Changes to be made
 1. **Restore `story011--cancel-study-leave-request.md`** — Remove the deletion of `artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md` from the PR. Run `git checkout Dev1 -- artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md`, commit, and push to the `feature/010` branch. The PR must only contain changes related to Story 010.
+
+## Fix Record
+
+Agent: Developer Agent
+Branch: feature/010
+PR: https://github.com/williamhowells238/Study-Leave/pull/18
+Summary: Restored accidentally deleted `artefacts/stories/sprint005/ready-for-test/story011--cancel-study-leave-request.md` by checking it out from Dev1 and committing as an amendment to the feature/010 branch.
