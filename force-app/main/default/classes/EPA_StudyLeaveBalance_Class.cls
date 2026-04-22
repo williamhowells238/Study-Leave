@@ -10,6 +10,17 @@ public with sharing class EPA_StudyLeaveBalance_Class {
     @TestVisible
     private static Decimal allowanceOverride = null;
 
+    @TestVisible
+    private static Integer yearOverride = null;
+
+    /**
+     * @description: Returns the year to use for queries (current year or test override).
+     * @return The year as an Integer.
+     */
+    private static Integer getQueryYear() {
+        return yearOverride != null ? yearOverride : Date.today().year();
+    }
+
     /**
      * @description: Wrapper class containing balance summary data.
      */
@@ -29,7 +40,7 @@ public with sharing class EPA_StudyLeaveBalance_Class {
         Decimal annualAllowance = getAllowance();
 
         Id currentUserId = UserInfo.getUserId();
-        Integer currentYear = Date.today().year();
+        Integer currentYear = getQueryYear();
         Date yearStart = Date.newInstance(currentYear, 1, 1);
         Date yearEnd = Date.newInstance(currentYear, 12, 31);
 
@@ -63,7 +74,7 @@ public with sharing class EPA_StudyLeaveBalance_Class {
     @AuraEnabled(cacheable=true)
     public static List<EPA_StudyLeaveRequest__c> getRequestHistory() {
         Id currentUserId = UserInfo.getUserId();
-        Integer currentYear = Date.today().year();
+        Integer currentYear = getQueryYear();
         Date yearStart = Date.newInstance(currentYear, 1, 1);
         Date yearEnd = Date.newInstance(currentYear, 12, 31);
 

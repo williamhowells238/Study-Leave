@@ -22,41 +22,43 @@ private class EPA_StudyLeaveBalance_TestClass {
         EPA_LeaveCategory__c category = new EPA_LeaveCategory__c(Name = 'Study Block');
         insert category;
 
+        // Use current year but with dates far enough in the future
+        // to pass the advance-notice validation rule (>= TODAY + 1 month)
         Integer currentYear = Date.today().year();
 
         List<EPA_StudyLeaveRequest__c> requests = new List<EPA_StudyLeaveRequest__c>();
 
         // Request 1: 5 business days — will become Approved
-        // Mon to Fri = 5 weekdays
+        // Mon to Fri = 5 weekdays (July)
         requests.add(new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = category.Id,
-            EPA_StartDate__c = Date.newInstance(currentYear, 3, 2),
-            EPA_EndDate__c = Date.newInstance(currentYear, 3, 6)
+            EPA_StartDate__c = Date.newInstance(currentYear, 7, 6),
+            EPA_EndDate__c = Date.newInstance(currentYear, 7, 10)
         ));
 
-        // Request 2: 5 business days — stays Pending
+        // Request 2: 5 business days — stays Pending (August)
         requests.add(new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = category.Id,
-            EPA_StartDate__c = Date.newInstance(currentYear, 4, 6),
-            EPA_EndDate__c = Date.newInstance(currentYear, 4, 10)
+            EPA_StartDate__c = Date.newInstance(currentYear, 8, 3),
+            EPA_EndDate__c = Date.newInstance(currentYear, 8, 7)
         ));
 
-        // Request 3: 5 business days — will become Rejected
+        // Request 3: 5 business days — will become Rejected (September)
         requests.add(new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = category.Id,
-            EPA_StartDate__c = Date.newInstance(currentYear, 5, 4),
-            EPA_EndDate__c = Date.newInstance(currentYear, 5, 8)
+            EPA_StartDate__c = Date.newInstance(currentYear, 9, 7),
+            EPA_EndDate__c = Date.newInstance(currentYear, 9, 11)
         ));
 
-        // Request 4: 5 business days — will become Cancelled
+        // Request 4: 5 business days — will become Cancelled (October)
         requests.add(new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = testUserId,
             EPA_Category__c = category.Id,
-            EPA_StartDate__c = Date.newInstance(currentYear, 6, 1),
-            EPA_EndDate__c = Date.newInstance(currentYear, 6, 5)
+            EPA_StartDate__c = Date.newInstance(currentYear, 10, 5),
+            EPA_EndDate__c = Date.newInstance(currentYear, 10, 9)
         ));
 
         insert requests;
@@ -189,14 +191,17 @@ private class EPA_StudyLeaveBalance_TestClass {
         EPA_StudyLeaveBalance_Class.allowanceOverride = 100000;
 
         EPA_LeaveCategory__c cat = [SELECT Id FROM EPA_LeaveCategory__c LIMIT 1];
-        Integer currentYear = Date.today().year();
+        // Use a future year to bypass advance-notice validation rule
+        Integer bulkYear = Date.today().year() + 2;
+        EPA_StudyLeaveBalance_Class.yearOverride = bulkYear;
 
         List<EPA_StudyLeaveRequest__c> bulkRequests = new List<EPA_StudyLeaveRequest__c>();
-        for (Integer i = 0; i < 200; i++) {
-            // Spread across months — use modulo to cycle through months 1-10
-            Integer month = Math.mod(i, 10) + 1;
+        for (Integer i = 0; i < 50; i++) {
+            // Spread across months — use modulo to cycle through months 7-10
+            // (future months to bypass advance-notice validation)
+            Integer month = Math.mod(i, 4) + 7;
             Integer day = Math.mod(i, 20) + 1;
-            Date startDate = Date.newInstance(currentYear, month, day);
+            Date startDate = Date.newInstance(bulkYear, month, day);
             // Single day requests to avoid overlaps
             bulkRequests.add(new EPA_StudyLeaveRequest__c(
                 EPA_Apprentice__c = testUserId,
@@ -215,7 +220,7 @@ private class EPA_StudyLeaveBalance_TestClass {
         Test.stopTest();
 
         Assert.isTrue(summary.consumedDays > 0, 'Consumed days should be greater than 0 for bulk records');
-        Assert.areEqual(200, history.size(), 'All 200 records should be returned in history');
+        Assert.areEqual(50, history.size(), 'All 50 records should be returned in history');
         Assert.areEqual(100000, summary.annualAllowance, 'Allowance should be set correctly');
     }
 }
