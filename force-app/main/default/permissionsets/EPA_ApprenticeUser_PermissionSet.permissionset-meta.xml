@@ -81,4 +81,12 @@
         <tab>EPA_SubmissionForm</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <tabSettings>
+        <tab>EPA_ApprenticeRequestList</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <classAccesses>
+        <apexClass>EPA_ApprenticeRequestList_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
 </PermissionSet>
