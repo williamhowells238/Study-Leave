@@ -2,6 +2,16 @@
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldPermissions>
         <editable>true</editable>
+        <field>EPA_LeaveQuota__c.EPA_Apprentice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EPA_LeaveQuota__c.EPA_DaysRemaining__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>EPA_StudyLeaveRequest__c.EPA_Apprentice__c</field>
         <readable>true</readable>
     </fieldPermissions>
