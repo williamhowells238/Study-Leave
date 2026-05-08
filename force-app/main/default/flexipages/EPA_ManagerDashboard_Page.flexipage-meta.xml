@@ -3,6 +3,12 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>epa_ManagerTeamBalanceView_LWC</componentName>
+                <identifier>epa_ManagerTeamBalanceView_LWC</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>epa_ManagerTeamRequestList_LWC</componentName>
                 <identifier>epa_ManagerTeamRequestList_LWC</identifier>
             </componentInstance>
