@@ -65,11 +65,19 @@
                 </lightning-layout-item>
 
                 <lightning-layout-item size="12" padding="around-small">
+                    <template if:true={hasError}>
+                        <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_small" role="alert">
+                            <span class="slds-assistive-text">error</span>
+                            <lightning-icon icon-name="utility:error" alternative-text="Error" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <lightning-formatted-text value={errorMessage}></lightning-formatted-text>
+                        </div>
+                    </template>
                     <lightning-button
                         variant="brand"
                         label="Submit Request"
                         title="Submit Study Leave Request"
                         onclick={handleSubmit}
+                        disabled={isSubmitting}
                         class="slds-m-top_medium"
                     ></lightning-button>
                 </lightning-layout-item>

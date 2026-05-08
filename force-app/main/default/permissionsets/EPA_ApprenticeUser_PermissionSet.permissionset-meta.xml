@@ -1,86 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>EPA Apprentice User</label>
     <description>Grants apprentice-level access to Study Leave Request and Leave Quota objects.</description>
-    <hasActivationRequired>false</hasActivationRequired>
-    <license>Salesforce</license>
-    <objectPermissions>
-        <object>EPA_StudyLeaveRequest__c</object>
-        <allowCreate>true</allowCreate>
-        <allowRead>true</allowRead>
-        <allowEdit>false</allowEdit>
-        <allowDelete>false</allowDelete>
-        <modifyAllRecords>false</modifyAllRecords>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <object>EPA_LeaveQuota__c</object>
-        <allowCreate>false</allowCreate>
-        <allowRead>true</allowRead>
-        <allowEdit>false</allowEdit>
-        <allowDelete>false</allowDelete>
-        <modifyAllRecords>false</modifyAllRecords>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
     <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_Reason__c</field>
-        <readable>true</readable>
-        <editable>true</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_Apprentice__c</field>
-        <readable>true</readable>
-        <editable>true</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_Manager__c</field>
-        <readable>true</readable>
-        <editable>true</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_RejectionReason__c</field>
-        <readable>true</readable>
         <editable>false</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_RejectionTimestamp__c</field>
-        <readable>true</readable>
-        <editable>false</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_ApprovalTimestamp__c</field>
-        <readable>true</readable>
-        <editable>false</editable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <field>EPA_StudyLeaveRequest__c.EPA_CancellationTimestamp__c</field>
-        <readable>true</readable>
-        <editable>false</editable>
-    </fieldPermissions>
-    <fieldPermissions>
         <field>EPA_LeaveQuota__c.EPA_Apprentice__c</field>
         <readable>true</readable>
-        <editable>false</editable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
         <field>EPA_LeaveQuota__c.EPA_DaysRemaining__c</field>
         <readable>true</readable>
-        <editable>false</editable>
     </fieldPermissions>
-    <tabSettings>
-        <tab>EPA_StudyLeaveRequest__c</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_Apprentice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_ApprovalTimestamp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_CancellationTimestamp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_Reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_RejectionReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>EPA_StudyLeaveRequest__c.EPA_RejectionTimestamp__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>EPA Apprentice User</label>
+    <license>Salesforce</license>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EPA_LeaveQuota__c</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>EPA_StudyLeaveRequest__c</object>
+        <viewAllFields>false</viewAllFields>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <tabSettings>
         <tab>EPA_LeaveQuota__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>EPA_SubmissionForm</tab>
+        <tab>EPA_StudyLeaveRequest__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
-        <tab>EPA_ManagerDashboard</tab>
-        <visibility>None</visibility>
+        <tab>EPA_SubmissionForm</tab>
+        <visibility>Visible</visibility>
     </tabSettings>
 </PermissionSet>
