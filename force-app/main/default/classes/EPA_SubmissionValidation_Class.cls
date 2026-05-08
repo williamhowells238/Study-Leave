@@ -13,16 +13,25 @@ public with sharing class EPA_SubmissionValidation_Class {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String errorMessage;
         @AuraEnabled public Id recordId;
+        @AuraEnabled public String leaveType;
+        @AuraEnabled public Date startDate;
+        @AuraEnabled public Date endDate;
 
         /**
-         * @description: Constructs a success result with the new record Id.
+         * @description: Constructs a success result with the new record Id and confirmation details.
          * @param recId The Id of the newly created study leave request record.
+         * @param leaveType The type of leave requested.
+         * @param startDate The start date of the leave request.
+         * @param endDate The end date of the leave request.
          * @return SubmissionResult instance indicating success.
          */
-        public SubmissionResult(Id recId) {
+        public SubmissionResult(Id recId, String leaveType, Date startDate, Date endDate) {
             this.success = true;
             this.errorMessage = null;
             this.recordId = recId;
+            this.leaveType = leaveType;
+            this.startDate = startDate;
+            this.endDate = endDate;
         }
 
         /**
@@ -34,6 +43,9 @@ public with sharing class EPA_SubmissionValidation_Class {
             this.success = false;
             this.errorMessage = message;
             this.recordId = null;
+            this.leaveType = null;
+            this.startDate = null;
+            this.endDate = null;
         }
     }
 
@@ -91,9 +103,19 @@ public with sharing class EPA_SubmissionValidation_Class {
             );
         }
 
-        // All validations passed — create the request record
+        // All validations passed — populate Manager from hierarchy
+        User currentUser = [
+            SELECT ManagerId
+            FROM User
+            WHERE Id = :currentUserId
+            WITH USER_MODE
+            LIMIT 1
+        ];
+
+        // Create the request record
         EPA_StudyLeaveRequest__c request = new EPA_StudyLeaveRequest__c(
             EPA_Apprentice__c = currentUserId,
+            EPA_Manager__c = currentUser.ManagerId,
             EPA_StartDate__c = startDate,
             EPA_EndDate__c = endDate,
             EPA_NumberOfDays__c = numberOfDays,
@@ -103,8 +125,14 @@ public with sharing class EPA_SubmissionValidation_Class {
             EPA_SubmissionTimestamp__c = Datetime.now()
         );
 
-        insert request;
+        try {
+            insert request;
+        } catch (DmlException e) {
+            return new SubmissionResult(
+                'An unexpected error occurred while saving your request. Please try again or contact your administrator.'
+            );
+        }
 
-        return new SubmissionResult(request.Id);
+        return new SubmissionResult(request.Id, leaveType, startDate, endDate);
     }
 }
