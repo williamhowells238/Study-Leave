@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <formFactors>Large</formFactors>
+    <formFactors>Small</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <label>EPA Study Leave</label>
+    <navType>Standard</navType>
+    <tabs>standard-home</tabs>
+    <tabs>EPA_StudyLeaveRequest__c</tabs>
+    <tabs>EPA_LeaveQuota__c</tabs>
+    <tabs>EPA_ManagerDashboard</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>
