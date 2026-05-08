@@ -1,6 +1,19 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
 import getTeamRequests from '@salesforce/apex/EPA_ManagerTeamRequestList_Class.getTeamRequests';
+import approveRequest from '@salesforce/apex/EPA_ApproveRejectRequest_Class.approveRequest';
+import rejectRequest from '@salesforce/apex/EPA_ApproveRejectRequest_Class.rejectRequest';
+
+function getRowActions(row, doneCallback) {
+    const actions = [{ label: 'View Details', name: 'view' }];
+    if (row.EPA_Status__c === 'Pending') {
+        actions.push({ label: 'Approve', name: 'approve' });
+        actions.push({ label: 'Reject', name: 'reject' });
+    }
+    doneCallback(actions);
+}
 
 const COLUMNS = [
     { label: 'Apprentice Name', fieldName: 'apprenticeName', type: 'text' },
@@ -12,7 +25,7 @@ const COLUMNS = [
     {
         type: 'action',
         typeAttributes: {
-            rowActions: [{ label: 'View Details', name: 'view' }]
+            rowActions: getRowActions
         }
     }
 ];
@@ -31,9 +44,17 @@ export default class Epa_ManagerTeamRequestList_LWC extends NavigationMixin(Ligh
     columns = COLUMNS;
     statusOptions = STATUS_OPTIONS;
     selectedStatus = '';
+    wiredResult;
+
+    // Rejection modal state
+    showRejectModal = false;
+    rejectionReason = '';
+    rejectingRequestId;
 
     @wire(getTeamRequests, { statusFilter: '$wireStatusFilter' })
-    wiredRequests({ data, error }) {
+    wiredRequests(result) {
+        this.wiredResult = result;
+        const { data, error } = result;
         if (data) {
             this.requests = data.map(record => ({
                 ...record,
@@ -70,6 +91,72 @@ export default class Epa_ManagerTeamRequestList_LWC extends NavigationMixin(Ligh
                     actionName: 'view'
                 }
             });
+        } else if (actionName === 'approve') {
+            this.handleApprove(row.Id);
+        } else if (actionName === 'reject') {
+            this.rejectingRequestId = row.Id;
+            this.rejectionReason = '';
+            this.showRejectModal = true;
         }
+    }
+
+    handleApprove(requestId) {
+        approveRequest({ requestId })
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Request has been approved.',
+                        variant: 'success'
+                    })
+                );
+                return refreshApex(this.wiredResult);
+            })
+            .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: error.body?.message ?? 'An error occurred while approving the request.',
+                        variant: 'error'
+                    })
+                );
+            });
+    }
+
+    handleRejectReasonChange(event) {
+        this.rejectionReason = event.detail.value;
+    }
+
+    handleRejectConfirm() {
+        const requestId = this.rejectingRequestId;
+        const reason = this.rejectionReason || null;
+        this.showRejectModal = false;
+
+        rejectRequest({ requestId, rejectionReason: reason })
+            .then(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Request has been rejected.',
+                        variant: 'success'
+                    })
+                );
+                return refreshApex(this.wiredResult);
+            })
+            .catch(error => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: error.body?.message ?? 'An error occurred while rejecting the request.',
+                        variant: 'error'
+                    })
+                );
+            });
+    }
+
+    handleRejectCancel() {
+        this.showRejectModal = false;
+        this.rejectionReason = '';
+        this.rejectingRequestId = undefined;
     }
 }

@@ -36,4 +36,32 @@
             </div>
         </template>
     </lightning-card>
+
+    <!-- Rejection Reason Modal -->
+    <template if:true={showRejectModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="reject-modal-heading" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" aria-label="Close" onclick={handleRejectCancel}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" size="small" variant="inverse"></lightning-icon>
+                </button>
+                <div class="slds-modal__header">
+                    <h1 id="reject-modal-heading" class="slds-modal__title slds-hyphenate">Reject Study Leave Request</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-textarea
+                        label="Rejection Reason (Optional)"
+                        value={rejectionReason}
+                        onchange={handleRejectReasonChange}
+                        placeholder="Enter a reason for rejecting this request..."
+                        max-length="1000"
+                    ></lightning-textarea>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleRejectCancel}></lightning-button>
+                    <lightning-button label="Confirm Rejection" variant="destructive" onclick={handleRejectConfirm} class="slds-m-left_x-small"></lightning-button>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
 </template>
