@@ -76,6 +76,10 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>EPA_SubmissionForm</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>EPA_ManagerDashboard</tab>
         <visibility>None</visibility>
     </tabSettings>
