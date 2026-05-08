@@ -1,10 +1,14 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import validateAndSubmit from '@salesforce/apex/EPA_SubmissionValidation_Class.validateAndSubmit';
 
 export default class Epa_SubmissionForm_LWC extends LightningElement {
-    @track leaveType = '';
-    @track startDate = '';
-    @track endDate = '';
-    @track reason = '';
+    leaveType = '';
+    startDate = '';
+    endDate = '';
+    reason = '';
+    errorMessage = '';
+    isSubmitting = false;
 
     get leaveTypeOptions() {
         return [
@@ -19,16 +23,23 @@ export default class Epa_SubmissionForm_LWC extends LightningElement {
         return this.calculateNumberOfDays();
     }
 
+    get hasError() {
+        return this.errorMessage !== '';
+    }
+
     handleLeaveTypeChange(event) {
         this.leaveType = event.detail.value;
+        this.errorMessage = '';
     }
 
     handleStartDateChange(event) {
         this.startDate = event.target.value;
+        this.errorMessage = '';
     }
 
     handleEndDateChange(event) {
         this.endDate = event.target.value;
+        this.errorMessage = '';
     }
 
     handleReasonChange(event) {
@@ -53,6 +64,58 @@ export default class Epa_SubmissionForm_LWC extends LightningElement {
     }
 
     handleSubmit() {
-        // Submission logic deferred to Story 007
+        this.errorMessage = '';
+
+        // Client-side validation
+        if (!this.leaveType || !this.startDate || !this.endDate) {
+            this.errorMessage = 'Please complete all required fields before submitting.';
+            return;
+        }
+
+        const numberOfDays = this.calculateNumberOfDays();
+        if (!numberOfDays || numberOfDays < 1) {
+            this.errorMessage = 'End date must be on or after the start date.';
+            return;
+        }
+
+        this.isSubmitting = true;
+
+        validateAndSubmit({
+            startDate: this.startDate,
+            endDate: this.endDate,
+            numberOfDays: numberOfDays,
+            leaveType: this.leaveType,
+            reason: this.reason
+        })
+            .then((result) => {
+                if (result.success) {
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Success',
+                            message: 'Your study leave request has been submitted successfully.',
+                            variant: 'success'
+                        })
+                    );
+                    this.resetForm();
+                } else {
+                    this.errorMessage = result.errorMessage;
+                }
+            })
+            .catch((error) => {
+                this.errorMessage = error.body?.message
+                    ? error.body.message
+                    : 'An unexpected error occurred. Please try again or contact your administrator.';
+            })
+            .finally(() => {
+                this.isSubmitting = false;
+            });
+    }
+
+    resetForm() {
+        this.leaveType = '';
+        this.startDate = '';
+        this.endDate = '';
+        this.reason = '';
+        this.errorMessage = '';
     }
 }
