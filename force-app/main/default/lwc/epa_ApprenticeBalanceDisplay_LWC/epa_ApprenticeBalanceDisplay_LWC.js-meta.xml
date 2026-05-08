@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+    <masterLabel>EPA Apprentice Balance Display</masterLabel>
+    <description>Displays the apprentice's current leave balance including annual entitlement, days used, and days remaining.</description>
+</LightningComponentBundle>

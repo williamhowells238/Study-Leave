@@ -13,6 +13,7 @@
     <tabs>EPA_LeaveQuota__c</tabs>
     <tabs>EPA_SubmissionForm</tabs>
     <tabs>EPA_ApprenticeRequestList</tabs>
+    <tabs>EPA_ApprenticeBalanceDisplay</tabs>
     <tabs>EPA_ManagerDashboard</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
