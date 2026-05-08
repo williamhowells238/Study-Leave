@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title="Submit Study Leave Request" icon-name="standard:event">
+        <div class="slds-p-around_medium">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <lightning-combobox
+                        name="leaveType"
+                        label="Leave Type"
+                        value={leaveType}
+                        options={leaveTypeOptions}
+                        placeholder="Select Leave Type"
+                        required
+                        onchange={handleLeaveTypeChange}
+                    ></lightning-combobox>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <!-- Spacer for layout alignment -->
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <lightning-input
+                        type="date"
+                        name="startDate"
+                        label="Start Date"
+                        value={startDate}
+                        required
+                        onchange={handleStartDateChange}
+                    ></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" medium-device-size="6" padding="around-small">
+                    <lightning-input
+                        type="date"
+                        name="endDate"
+                        label="End Date"
+                        value={endDate}
+                        required
+                        onchange={handleEndDateChange}
+                    ></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-textarea
+                        name="reason"
+                        label="Reason (Optional)"
+                        value={reason}
+                        max-length="1000"
+                        onchange={handleReasonChange}
+                    ></lightning-textarea>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <div class="slds-box slds-theme_shade slds-p-around_small">
+                        <p class="slds-text-title_caps slds-m-bottom_xx-small">Number of Days Requested</p>
+                        <p class="slds-text-heading_medium" aria-live="polite" aria-atomic="true">
+                            <template if:true={numberOfDaysDisplay}>
+                                {numberOfDaysDisplay}
+                            </template>
+                            <template if:false={numberOfDaysDisplay}>
+                                &mdash;
+                            </template>
+                        </p>
+                    </div>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" padding="around-small">
+                    <lightning-button
+                        variant="brand"
+                        label="Submit Request"
+                        title="Submit Study Leave Request"
+                        onclick={handleSubmit}
+                        class="slds-m-top_medium"
+                    ></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>
