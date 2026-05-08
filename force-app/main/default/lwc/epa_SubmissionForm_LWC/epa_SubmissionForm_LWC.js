@@ -89,10 +89,12 @@ export default class Epa_SubmissionForm_LWC extends LightningElement {
         })
             .then((result) => {
                 if (result.success) {
+                    const formattedStart = new Date(result.startDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+                    const formattedEnd = new Date(result.endDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Success',
-                            message: 'Your study leave request has been submitted successfully.',
+                            message: `Your ${result.leaveType} study leave request for ${formattedStart} to ${formattedEnd} has been submitted and is pending manager review.`,
                             variant: 'success'
                         })
                     );
