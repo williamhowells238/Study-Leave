@@ -1,6 +1,10 @@
 import { LightningElement, wire } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { refreshApex } from '@salesforce/apex';
+import LightningConfirm from 'lightning/confirm';
 import getMyRequests from '@salesforce/apex/EPA_ApprenticeRequestList_Class.getMyRequests';
+import cancelRequest from '@salesforce/apex/EPA_CancelRequest_Class.cancelRequest';
 
 const COLUMNS = [
     { label: 'Leave Type', fieldName: 'EPA_LeaveType__c', type: 'text' },
@@ -11,7 +15,13 @@ const COLUMNS = [
     {
         type: 'action',
         typeAttributes: {
-            rowActions: [{ label: 'View Details', name: 'view' }]
+            rowActions: function (row, doneCallback) {
+                const actions = [{ label: 'View Details', name: 'view' }];
+                if (row.EPA_Status__c === 'Approved') {
+                    actions.push({ label: 'Cancel', name: 'cancel' });
+                }
+                doneCallback(actions);
+            }
         }
     }
 ];
@@ -20,9 +30,12 @@ export default class Epa_ApprenticeRequestList_LWC extends NavigationMixin(Light
     requests;
     error;
     columns = COLUMNS;
+    wiredRequestsResult;
 
     @wire(getMyRequests)
-    wiredRequests({ data, error }) {
+    wiredRequests(result) {
+        this.wiredRequestsResult = result;
+        const { data, error } = result;
         if (data) {
             this.requests = data;
             this.error = undefined;
@@ -48,6 +61,38 @@ export default class Epa_ApprenticeRequestList_LWC extends NavigationMixin(Light
                     actionName: 'view'
                 }
             });
+        } else if (actionName === 'cancel') {
+            this.handleCancelAction(row);
+        }
+    }
+
+    async handleCancelAction(row) {
+        const confirmed = await LightningConfirm.open({
+            message: 'Are you sure you want to cancel this approved study leave request? The days will be returned to your balance.',
+            variant: 'default',
+            label: 'Confirm Cancellation'
+        });
+        if (!confirmed) {
+            return;
+        }
+        try {
+            await cancelRequest({ requestId: row.Id });
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Study leave request has been cancelled.',
+                    variant: 'success'
+                })
+            );
+            await refreshApex(this.wiredRequestsResult);
+        } catch (error) {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: error.body?.message ?? 'An error occurred while cancelling the request.',
+                    variant: 'error'
+                })
+            );
         }
     }
 }
