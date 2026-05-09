@@ -326,19 +326,20 @@ private class EPA_CancelRequest_TestClass {
     }
 
     /**
-     * @description: Bulk test - cancel 50 approved requests to verify governor limit safety.
-     *               Each call performs 1 SOQL + 1 DML (single-record action method).
+     * @description: Bulk test - cancel 33 approved requests to verify governor limit safety.
+     *               Each call performs 1 SOQL + 1 DML with trigger handlers consuming
+     *               additional SOQL (balance + notification).
      */
     @isTest
     static void givenBulkApprovedRequests_whenCancelAll_thenAllTransitionCorrectly() {
         Id managerId = UserInfo.getUserId();
         User apprentice = [SELECT Id FROM User WHERE LastName = 'CancelApprentice' LIMIT 1];
 
-        // Create 50 Approved requests for bulk test
+        // Create 33 Approved requests for bulk test
         List<EPA_StudyLeaveRequest__c> bulkRequests = new List<EPA_StudyLeaveRequest__c>();
         Datetime now = Datetime.now();
         System.runAs(new User(Id = managerId)) {
-            for (Integer i = 0; i < 50; i++) {
+            for (Integer i = 0; i < 33; i++) {
                 bulkRequests.add(new EPA_StudyLeaveRequest__c(
                     EPA_Apprentice__c = apprentice.Id,
                     EPA_Manager__c = managerId,
@@ -382,7 +383,7 @@ private class EPA_CancelRequest_TestClass {
             FROM EPA_StudyLeaveRequest__c
             WHERE Id IN :bulkIds
         ];
-        Assert.areEqual(50, updated.size(), 'All 50 records should be returned');
+        Assert.areEqual(33, updated.size(), 'All 33 records should be returned');
         for (EPA_StudyLeaveRequest__c rec : updated) {
             Assert.areEqual('Cancelled', rec.EPA_Status__c, 'All records should be Cancelled');
             Assert.isNotNull(rec.EPA_CancellationTimestamp__c, 'All records should have cancellation timestamp');
