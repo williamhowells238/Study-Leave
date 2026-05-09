@@ -8,10 +8,12 @@ trigger EPA_StudyLeaveRequest_Trigger on EPA_StudyLeaveRequest__c (after insert,
 
     if (Trigger.isAfter && Trigger.isInsert) {
         EPA_StudyLeaveRequestSharing_Class.handleAfterInsert(Trigger.new);
+        EPA_NotificationService_Class.handleAfterInsert(Trigger.new);
     }
 
     if (Trigger.isAfter && Trigger.isUpdate) {
         EPA_StudyLeaveRequestSharing_Class.handleAfterUpdate(Trigger.new, Trigger.oldMap);
         EPA_LeaveBalanceCalculation_Class.handleAfterUpdate(Trigger.new, Trigger.oldMap);
+        EPA_NotificationService_Class.handleAfterUpdate(Trigger.new, Trigger.oldMap);
     }
 }

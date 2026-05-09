@@ -39,7 +39,6 @@ public with sharing class EPA_CancelRequest_Class {
 
         request.EPA_Status__c = 'Cancelled';
         request.EPA_CancellationTimestamp__c = Datetime.now();
-        // TODO Story 016/017: Raise cancellation notification event for manager
         update request;
     }
 
