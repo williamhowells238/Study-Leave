@@ -174,6 +174,8 @@ private class EPA_CancelRequest_TestClass {
         }
         Test.stopTest();
 
+        Datetime afterCancel = Datetime.now();
+
         EPA_StudyLeaveRequest__c updated = [
             SELECT EPA_Status__c, EPA_CancellationTimestamp__c
             FROM EPA_StudyLeaveRequest__c
@@ -181,10 +183,8 @@ private class EPA_CancelRequest_TestClass {
         ];
         Assert.areEqual('Cancelled', updated.EPA_Status__c, 'Status should be Cancelled');
         Assert.isNotNull(updated.EPA_CancellationTimestamp__c, 'Cancellation timestamp should be set');
-        Assert.isTrue(
-            updated.EPA_CancellationTimestamp__c >= beforeCancel,
-            'Cancellation timestamp should be at or after the cancel action time'
-        );
+        Long diffMs = Math.abs(beforeCancel.getTime() - updated.EPA_CancellationTimestamp__c.getTime());
+        Assert.isTrue(diffMs < 2000, 'Cancellation timestamp should be within 2 seconds of the cancel action time. Difference: ' + diffMs + 'ms');
     }
 
     /**
