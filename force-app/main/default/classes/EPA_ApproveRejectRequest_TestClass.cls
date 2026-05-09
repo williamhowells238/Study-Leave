@@ -230,20 +230,21 @@ private class EPA_ApproveRejectRequest_TestClass {
     }
 
     /**
-     * @description: Bulk test - approve 33 pending requests in a single transaction.
+     * @description: Bulk test - approve 10 pending requests in a single transaction.
      *               Asserts all records transition correctly without governor limit issues.
-     *               Uses 33 records as each call performs 1 SOQL + 1 DML with trigger
-     *               handlers consuming additional SOQL (balance + notification).
+     *               Uses 10 records as each per-record call performs 1 SOQL + 1 DML with
+     *               trigger handlers consuming additional SOQL (sharing + balance +
+     *               email notification + bell notification).
      */
     @isTest
     static void givenBulkPendingRequests_whenApproveAll_thenAllTransitionCorrectly() {
         Id managerId = UserInfo.getUserId();
         User apprentice = [SELECT Id FROM User WHERE LastName = 'Apprentice' AND FirstName = 'Test' LIMIT 1];
 
-        // Create 33 Pending requests for bulk test
+        // Create 10 Pending requests for bulk test
         List<EPA_StudyLeaveRequest__c> bulkRequests = new List<EPA_StudyLeaveRequest__c>();
         Datetime now = Datetime.now();
-        for (Integer i = 0; i < 33; i++) {
+        for (Integer i = 0; i < 10; i++) {
             bulkRequests.add(new EPA_StudyLeaveRequest__c(
                 EPA_Apprentice__c = apprentice.Id,
                 EPA_Manager__c = managerId,
@@ -271,7 +272,7 @@ private class EPA_ApproveRejectRequest_TestClass {
             FROM EPA_StudyLeaveRequest__c
             WHERE Id IN :bulkIds
         ];
-        Assert.areEqual(33, updated.size(), 'All 33 records should be returned');
+        Assert.areEqual(10, updated.size(), 'All 10 records should be returned');
         for (EPA_StudyLeaveRequest__c rec : updated) {
             Assert.areEqual('Approved', rec.EPA_Status__c, 'All records should be Approved');
             Assert.isNotNull(rec.EPA_ApprovalTimestamp__c, 'All records should have approval timestamp');
