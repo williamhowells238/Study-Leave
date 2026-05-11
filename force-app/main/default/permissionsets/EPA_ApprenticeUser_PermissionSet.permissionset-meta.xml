@@ -89,6 +89,10 @@
         <tab>EPA_ApprenticeBalanceDisplay</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <applicationVisibilities>
+        <application>EPA_StudyLeaveApp</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>EPA_ApprenticeBalanceDisplay_Class</apexClass>
         <enabled>true</enabled>
@@ -99,6 +103,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EPA_CancelRequest_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_SubmissionValidation_Class</apexClass>
         <enabled>true</enabled>
     </classAccesses>
 </PermissionSet>

@@ -81,4 +81,20 @@
         <tab>EPA_StudyLeaveRequest__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
+    <applicationVisibilities>
+        <application>EPA_StudyLeaveApp</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <classAccesses>
+        <apexClass>EPA_ManagerTeamRequestList_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_ManagerTeamBalanceView_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_ApproveRejectRequest_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
 </PermissionSet>
