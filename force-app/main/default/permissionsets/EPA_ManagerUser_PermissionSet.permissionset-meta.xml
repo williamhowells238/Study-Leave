@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>EPA_StudyLeaveApp</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <classAccesses>
+        <apexClass>EPA_ApproveRejectRequest_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_ManagerTeamBalanceView_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_ManagerTeamRequestList_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants manager-level access to Study Leave Request (Read/Edit) and Leave Quota (Read) objects, with field-level permissions for all relevant fields.</description>
     <fieldPermissions>
         <editable>false</editable>
