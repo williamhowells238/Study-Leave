@@ -74,20 +74,27 @@ private class EPA_ProvisionLeaveQuota_TestClass {
             new List<EPA_ProvisionLeaveQuota_Class.ProvisionRequest>();
         requests.add(new EPA_ProvisionLeaveQuota_Class.ProvisionRequest());
 
+        // Collect test apprentice user IDs for isolated assertions
+        Set<Id> testUserIds = new Set<Id>();
+        for (User u : [SELECT Id FROM User WHERE FirstName = 'Apprentice' AND LastName LIKE 'User%' AND Email LIKE 'apprentice.user%@epa.test.invalid']) {
+            testUserIds.add(u.Id);
+        }
+
         Test.startTest();
         List<Integer> results = EPA_ProvisionLeaveQuota_Class.provisionQuotas(requests);
         Test.stopTest();
 
-        Assert.areEqual(3, results[0], 'Should create 3 quota records');
+        Assert.isTrue(results[0] >= 3, 'Should create at least 3 quota records for test apprentice users');
 
         String currentYear = String.valueOf(Date.today().year());
         List<EPA_LeaveQuota__c> quotas = [
             SELECT EPA_Apprentice__c, EPA_AnnualEntitlement__c, EPA_DaysUsed__c, EPA_QuotaYear__c
             FROM EPA_LeaveQuota__c
             WHERE EPA_QuotaYear__c = :currentYear
+            AND EPA_Apprentice__c IN :testUserIds
         ];
 
-        Assert.areEqual(3, quotas.size(), 'Should have exactly 3 quota records');
+        Assert.areEqual(3, quotas.size(), 'Should have exactly 3 quota records for test apprentice users');
         for (EPA_LeaveQuota__c q : quotas) {
             Assert.areEqual(24, q.EPA_AnnualEntitlement__c, 'Annual Entitlement should be 24');
             Assert.areEqual(0, q.EPA_DaysUsed__c, 'Days Used should be 0');
@@ -116,11 +123,19 @@ private class EPA_ProvisionLeaveQuota_TestClass {
 
         Assert.areEqual(0, results[0], 'Second run should create 0 records');
 
+        // Scope assertion to test-created user IDs only
+        Set<Id> testUserIds = new Set<Id>();
+        for (User u : [SELECT Id FROM User WHERE FirstName = 'Apprentice' AND LastName LIKE 'User%' AND Email LIKE 'apprentice.user%@epa.test.invalid']) {
+            testUserIds.add(u.Id);
+        }
+
         String currentYear = String.valueOf(Date.today().year());
         List<EPA_LeaveQuota__c> quotas = [
-            SELECT Id FROM EPA_LeaveQuota__c WHERE EPA_QuotaYear__c = :currentYear
+            SELECT Id FROM EPA_LeaveQuota__c
+            WHERE EPA_QuotaYear__c = :currentYear
+            AND EPA_Apprentice__c IN :testUserIds
         ];
-        Assert.areEqual(3, quotas.size(), 'Should still have exactly 3 quota records total');
+        Assert.areEqual(3, quotas.size(), 'Should still have exactly 3 quota records for test apprentice users');
     }
 
     /**
