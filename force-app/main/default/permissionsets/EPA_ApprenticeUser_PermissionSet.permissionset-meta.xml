@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>EPA_StudyLeaveApp</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <classAccesses>
+        <apexClass>EPA_ApprenticeBalanceDisplay_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_ApprenticeRequestList_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_CancelRequest_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EPA_SubmissionValidation_Class</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Grants apprentice-level access to Study Leave Request and Leave Quota objects.</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -70,6 +90,14 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <tabSettings>
+        <tab>EPA_ApprenticeBalanceDisplay</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>EPA_ApprenticeRequestList</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>EPA_LeaveQuota__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
@@ -81,24 +109,4 @@
         <tab>EPA_SubmissionForm</tab>
         <visibility>Visible</visibility>
     </tabSettings>
-    <tabSettings>
-        <tab>EPA_ApprenticeRequestList</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <tabSettings>
-        <tab>EPA_ApprenticeBalanceDisplay</tab>
-        <visibility>Visible</visibility>
-    </tabSettings>
-    <classAccesses>
-        <apexClass>EPA_ApprenticeBalanceDisplay_Class</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EPA_ApprenticeRequestList_Class</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EPA_CancelRequest_Class</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
 </PermissionSet>
