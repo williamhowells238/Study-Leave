@@ -35,7 +35,7 @@
         <name>Results_Screen</name>
         <label>Results</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>458</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -63,6 +63,22 @@
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
+    <screens>
+        <name>No_Apprentices_Warning_Screen</name>
+        <label>No Apprentices Found</label>
+        <locationX>440</locationX>
+        <locationY>458</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>NoApprenticesWarningMessage</name>
+            <fieldType>DisplayText</fieldType>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(255, 165, 0);&quot;&gt;Warning: No Apprentices Found&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;No active apprentices were found with the Apprentice permission set assigned. Please verify that apprentice users have been assigned the correct permission set before re-running this flow.&lt;/p&gt;</fieldText>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <actionCalls>
         <name>Invoke_Provision_Quotas</name>
         <label>Provision Quotas</label>
@@ -71,7 +87,7 @@
         <actionName>EPA_ProvisionLeaveQuota_Class</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Results_Screen</targetReference>
+            <targetReference>Check_Results_Decision</targetReference>
         </connector>
         <faultConnector>
             <targetReference>Error_Screen</targetReference>
@@ -81,6 +97,31 @@
             <name>output</name>
         </outputParameters>
     </actionCalls>
+    <decisions>
+        <name>Check_Results_Decision</name>
+        <label>Check Results</label>
+        <locationX>176</locationX>
+        <locationY>338</locationY>
+        <defaultConnector>
+            <targetReference>No_Apprentices_Warning_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Records Created</defaultConnectorLabel>
+        <rules>
+            <name>Records_Created</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordsCreatedCount</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Results_Screen</targetReference>
+            </connector>
+            <label>Records Created</label>
+        </rules>
+    </decisions>
     <variables>
         <name>RecordsCreatedCount</name>
         <dataType>Number</dataType>
